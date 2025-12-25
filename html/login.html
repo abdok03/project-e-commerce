@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>تسجيل الدخول</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+
+<a href="index.html" class="back">رجوع</a>
+
+<div class="login-container">
+
+    <img src="../assets/logo.png" class="logo">
+
+    <label>رقم الهاتف</label>
+    <div class="input-box">
+        <span class="prefix">962+</span>
+        <input type="text" placeholder="أدخل رقم الهاتف">
+    </div>
+
+    <label>كلمة المرور</label>
+    <div class="input-box">
+        <input type="password" id="pass" placeholder="أدخل كلمة المرور">
+        <i class="fa fa-eye" id="toggle"></i>
+    </div>
+
+    <button class="login-btn">تسجيل الدخول</button>
+
+</div>
+
+<script>
+const toggle = document.getElementById("toggle");
+const pass = document.getElementById("pass");
+
+toggle.onclick = () => {
+  pass.type = pass.type === "password" ? "text" : "password";
+  toggle.classList.toggle("fa-eye-slash");
+};
+</script>
+
+</body>
+</html>
