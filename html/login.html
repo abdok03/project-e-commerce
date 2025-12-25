@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<title>تسجيل الدخول</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -12,26 +13,50 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <body>
 
-<a href="index.html" class="back">رجوع</a>
+<div class="wrapper">
+    <a href="index.html" class="back">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
 
-<div class="login-container">
+    <div class="login-container">
+        <div class="logo-container">
+            <img src="../assets/logo.png" class="logo">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Please login to your account</p>
+        </div>
 
-    <img src="../assets/logo.png" class="logo">
+        <form class="login-form">
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <div class="input-box">
+                    <span class="prefix">+962</span>
+                    <input type="text" id="phone" placeholder="Enter phone number">
+                </div>
+            </div>
 
-    <label>رقم الهاتف</label>
-    <div class="input-box">
-        <span class="prefix">962+</span>
-        <input type="text" placeholder="أدخل رقم الهاتف">
+            <div class="form-group">
+                <label for="pass">Password</label>
+                <div class="input-box">
+                    <input type="password" id="pass" placeholder="Enter password">
+                    <i class="fa fa-eye" id="toggle"></i>
+                </div>
+            </div>
+
+            <div class="form-options">
+                <label class="remember">
+                    <input type="checkbox">
+                    <span>Remember me</span>
+                </label>
+                <a href="#" class="forgot">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+
+            <div class="register-link">
+                Don't have an account? <a href="signup.html">Sign up</a>
+            </div>
+        </form>
     </div>
-
-    <label>كلمة المرور</label>
-    <div class="input-box">
-        <input type="password" id="pass" placeholder="أدخل كلمة المرور">
-        <i class="fa fa-eye" id="toggle"></i>
-    </div>
-
-    <button class="login-btn">تسجيل الدخول</button>
-
 </div>
 
 <script>
