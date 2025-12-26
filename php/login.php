@@ -10,13 +10,12 @@ $phone = trim($_POST['phone_number'] ?? '');
 $password = $_POST['password'] ?? '';
 
 if (empty($phone) || empty($password)) {
-    die("الرجاء تعبئة جميع الحقول");
+    die("Please fill in all fields");
 }
 
 if (!preg_match('/^07[789][0-9]{7}$/', $phone)) {
-    die("رقم الهاتف غير صالح");
+    die("Invalid phone number format");
 }
-
 
 $query = "SELECT * FROM users WHERE phone_number = :phone LIMIT 1";
 $stmt = $db->prepare($query);
@@ -24,13 +23,13 @@ $stmt->bindParam(":phone", $phone);
 $stmt->execute();
 
 if ($stmt->rowCount() === 0) {
-    die("رقم الهاتف غير مسجل");
+    die("Phone number is not registered");
 }
 
 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!password_verify($password, $data['password'])) {
-    die("كلمة المرور غير صحيحة");
+    die("Incorrect password");
 }
 
 $_SESSION['user_id'] = $data['id'];
