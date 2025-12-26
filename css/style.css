@@ -72,12 +72,25 @@ body{
 .menu li{
     cursor:pointer;
 }
+.menu a{
+    text-decoration: none;
+    color: #000;     /* اللون اللي بدك ياه */
+    font-weight: 600;
+}
 
-.menu .active,
+.menu a:hover{
+    color: #b11218;  /* لون عند الهوفر */
+}
+
+
+
+.menu .active a,
 .menu li:hover{
     color:#c4161c;
 }
 
+
+/* Hero Section */
 .hero {
     position: relative;
     height: 450px;
