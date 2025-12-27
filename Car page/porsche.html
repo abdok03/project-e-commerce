@@ -4,13 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Carbon Chromes</title>
-    <link rel="stylesheet" href="../css/productcategory.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="porsche.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="../assets/icon.png">
+
 </head>
 
 <body>
+
     <nav class="navbar">
         <img src="../assets/logo.png" class="logo">
         <div class="search-box">
@@ -18,66 +22,86 @@
             <button>Search</button>
         </div>
         <div class="icons">
-            <a href="#" onclick="openPopup()"><i class="fa fa-user"></i></a>
+            <a href="../html/login.html"><i class="fa fa-user"></i></a>
             <i class="fa fa-heart"></i>
             <i class="fa fa-shopping-cart" id="cartIcon"></i>
         </div>
+
     </nav>
-    
+
     <ul class="menu">
-    <li><a href="index.html">Home</a></li>
-    <li ><a href="internal.html">Internal</a></li>
-    <li><a href="external.html">External</a></li>
-    <li><a href="Variousproducts.html">Various products</a></li>
-</ul>
-<section class="filter-hero"> 
-    <h2>Select your car category to see the products specific to it.</h2>
-    <div class="filter-box">
-        <select>
-            <option selected>internal</option>
-            <option>external</option>
-            <option>lighting</option>
-        </select>
-
-        <select>
-            <option selected>Car company</option>
-            <option>BMW</option>
-            <option>Mercedes</option>
-            <option>Audi</option>
-        </select>
-        <button class="search-btn">research</button>
-    </div>
-</section>
-
-<aside class="filter-sidebar">
-
-    <h3>Filter parts by car</h3>
-
-    <select>
-        <option selected>Manufacturing Company</option>
-        <option>BMW</option>
-        <option>Mercedes</option>
-        <option>Audi</option>
-    </select>
-
-    <select>
-        <option selected>internal</option>
-        <option>external</option>
-        <option>lighting</option>
-    </select>
-
-    <button class="filter-btn">research</button>
-
-</aside>
+        <li><a href="../html/index.html">Home</a></li>
+        <li><a href="../html/internal.html">Internal</a></li>
+        <li><a href="../html/external.html">External</a></li>
+        <li><a href="../html/Variousproducts.html">Various products</a></li>
+    </ul>
 
 
+    <section class="porsche-section">
+
+        <h2 class="porsche-title">Porsche car accessories</h2>
+
+        <div class="porsche-grid">
+
+            <a href="product.html" class="porsche-item">
+                <img src="Candle bottles.webp" alt="">
+                <p>Candle bottles</p>
+            </a>
+
+
+            <a href="product.html" class="porsche-item">
+                <img src="Porsche spark plug skins.webp" alt="">
+                <p>Porsche spark plug skins</p>
+            </a>
+
+            <a href="product.html" class="porsche-item">
+                <img src="Bag logos.webp" alt="">
+                <p>Bag logos</p>
+            </a>
+
+            <a href="product.html" class="porsche-item">
+                <img src="porsche wings.webp" alt="">
+                <p>Porsche Wings</p>
+            </a>
+
+            <a href="product.html" class="porsche-item">
+                <img src="projector.webp" alt="">
+                <p>Projector</p>
+            </a>
+
+            <a href="product.html" class="porsche-item">
+                <img src="Air conditioner fins and decorations.webp" alt="">
+                <p>Air conditioner fins and decorations</p>
+            </a>
+
+            <a href="product.html" class="porsche-item">
+                <img src="Door buttons.webp" alt="">
+                <p>Door buttons</p>
+            </a>
+
+            <a href="product.html" class="porsche-item">
+                <img src="Key cover.webp" alt="">
+                <p>Key cover</p>
+            </a>
+
+            <a href="product.html" class="porsche-item">
+                <img src="medal.webp" alt="">
+                <p>medal</p>
+            </a>
+
+            <a href="product.html" class="porsche-item">
+                <img src="Wheel covers.webp" alt="">
+                <p>Wheel covers</p>
+            </a>
+
+        </div>
+
+    </section>
 
 
 
 
-
-
- <!-- Footer -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-section">
@@ -148,136 +172,41 @@
             <div>All Rights Reserved. <span>Enhancements</span> Copyright © 2025</div>
         </div>
     </footer>
+  <!-- Cart Overlay -->
+    <div id="cartOverlay" class="cart-overlay"></div>
 
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
 
-     <!-- Popup Login -->
-<!-- Overlay Background -->
-<div class="popup-overlay" id="popup">
-    <div class="popup-box">
+        <div class="cart-header">
+            <button id="cartCloseBtn" class="cart-close">
+                <i class="fa fa-times"></i>
+                <span>CLOSING</span>
+            </button>
 
-        <img src="../assets/logo.png" class="popup-logo">
-
-        <div class="popup-title">Mobile number</div>
-
-        <div class="popup-input">
-            <span>+962</span>
-            <input type="text" placeholder="Enter mobile number">
+            <span class="cart-title">SHOPPING CART</span>
         </div>
 
-        <button class="popup-btn" onclick="openPasswordPopup()">
-            Login with Password
-        </button>
-
-    </div>
-</div>
-
-<!-- Password Popup -->
-<div class="popup-overlay" id="passwordPopup" style="display:none;">
-    <div class="popup-box">
-
-        <img src="../assets/logo.png" class="popup-logo">
-
-        <h3 id="welcomeText">Welcome back, User</h3>
-
-        <div class="popup-title">Enter Password</div>
-
-        <div class="popup-input">
-            <input type="password" placeholder="Enter your password">
+        <div id="cartItems" class="cart-items">
+            <!-- JS will inject items here -->
+            <p class="empty-cart">No products in the cart.</p>
         </div>
 
-        <button class="popup-btn">
-            Login
-        </button>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total (Including VAT)</span>
+                <span id="cartTotal">0 SAR</span>
+            </div>
 
-    </div>
-</div>
-
-
-<!-- Cart Overlay -->
-<div id="cartOverlay" class="cart-overlay"></div>
-
-<!-- Cart Sidebar -->
-<div id="cartSidebar" class="cart-sidebar">
-
-    <div class="cart-header">
-        <button id="cartCloseBtn" class="cart-close">
-            <i class="fa fa-times"></i>
-            <span>CLOSING</span>
-        </button>
-
-        <span class="cart-title">SHOPPING CART</span>
-    </div>
-
-    <div id="cartItems" class="cart-items">
-        <!-- JS will inject items here -->
-        <p class="empty-cart">No products in the cart.</p>
-    </div>
-
-    <div class="cart-footer">
-        <div class="cart-total">
-            <span>Total (Including VAT)</span>
-            <span id="cartTotal">0 SAR</span>
+            <div class="cart-footer-buttons">
+                <button class="cart-btn primary" onclick="window.location.href='../html/checkout.html'">Complete the order</button>
+                <button  class="cart-btn secondary" onclick="window.location.href='../html/cart.html'">Basket display</button>
+            </div>
         </div>
 
-        <div class="cart-footer-buttons">
-            <button class="cart-btn primary" onclick="window.location.href='checkout.html'">Complete the order</button>
-            <button  class="cart-btn secondary" onclick="window.location.href='cart.html'">Basket display</button>
-        </div>
     </div>
 
-</div>
-
-
-    <script>
-        function openPopup(){
-    document.getElementById("popup").style.display = "flex";
-}
-
-function closePopup(){
-    document.getElementById("popup").style.display = "none";
-}
-
-function openPasswordPopup(){
-
-    let userName = "Ruba";
-
-    document.getElementById("welcomeText").innerText =
-        "Welcome back, " + userName;
-
-    document.getElementById("popup").style.display = "none";
-    document.getElementById("passwordPopup").style.display = "flex";
-}
-
-
-// Popup 1 -------------
-const popupOverlay1 = document.getElementById("popup");
-const popupBox1 = popupOverlay1.querySelector(".popup-box");
-
-popupOverlay1.addEventListener("click", function(){
-    popupOverlay1.style.display = "none";
-});
-
-popupBox1.addEventListener("click", function(e){
-    e.stopPropagation();
-});
-
-
-// Popup 2 -------------
-const popupOverlay2 = document.getElementById("passwordPopup");
-const popupBox2 = popupOverlay2.querySelector(".popup-box");
-
-popupOverlay2.addEventListener("click", function(){
-    popupOverlay2.style.display = "none";
-});
-
-popupBox2.addEventListener("click", function(e){
-    e.stopPropagation();
-});
-
-    </script>
-
-
- <script>
+     <script>
 
         const cartSidebar = document.getElementById('cartSidebar');
         const cartOverlay = document.getElementById('cartOverlay');
@@ -391,4 +320,5 @@ popupBox2.addEventListener("click", function(e){
 
     </script>
 </body>
+
 </html>

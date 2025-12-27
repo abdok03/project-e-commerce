@@ -24,7 +24,7 @@
         <div class="icons">
             <a href="#" onclick="openPopup()"><i class="fa fa-user"></i></a>
             <i class="fa fa-heart"></i>
-            <i class="fa fa-shopping-cart"></i>
+            <i class="fa fa-shopping-cart" id="cartIcon"></i>
         </div>
     </nav>
     
@@ -350,6 +350,154 @@
 
     </div>
 </div>
+
+  <!-- Cart Overlay -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+
+        <div class="cart-header">
+            <button id="cartCloseBtn" class="cart-close">
+                <i class="fa fa-times"></i>
+                <span>CLOSING</span>
+            </button>
+
+            <span class="cart-title">SHOPPING CART</span>
+        </div>
+
+        <div id="cartItems" class="cart-items">
+            <!-- JS will inject items here -->
+            <p class="empty-cart">No products in the cart.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total (Including VAT)</span>
+                <span id="cartTotal">0 SAR</span>
+            </div>
+
+            <div class="cart-footer-buttons">
+                <button class="cart-btn primary" onclick="window.location.href='checkout.html'">Complete the order</button>
+                <button  class="cart-btn secondary" onclick="window.location.href='cart.html'">Basket display</button>
+            </div>
+        </div>
+
+    </div>
+
+     <script>
+
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartCloseBtn = document.getElementById('cartCloseBtn');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartItemsBox = document.getElementById('cartItems');
+        const cartTotalEl = document.getElementById('cartTotal');
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        renderCart();
+
+
+
+        function openCart() {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('show');
+        }
+
+
+        function closeCart() {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        }
+
+
+        function renderCart() {
+            cartItemsBox.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsBox.innerHTML = '<p class="empty-cart">No products in the cart.</p>';
+                cartTotalEl.textContent = '0 SAR';
+                return;
+            }
+
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.qty;
+
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+
+                div.innerHTML = `
+                <img src="${item.image}" alt="">
+                <div class="cart-item-info">
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-price">${item.price} SAR</div>
+                    <div class="cart-item-qty">Qty: ${item.qty}</div>
+                </div>
+            `;
+
+                cartItemsBox.appendChild(div);
+            });
+
+            cartTotalEl.textContent = total + ' SAR';
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+        }
+
+        function addToCart(product) {
+
+            const existing = cart.find(p => p.name === product.name);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            renderCart();
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            openCart();
+        }
+
+        // ربط أيقونة الكارت
+        if (cartIcon) {
+            cartIcon.addEventListener('click', openCart);
+        }
+
+        // زر الإغلاق
+        cartCloseBtn.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // ربط أزرار Add to cart
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const product = {
+                    name: this.dataset.name,
+                    price: parseFloat(this.dataset.price),
+                    image: this.dataset.image || '../assets/logo.png'
+                };
+                addToCart(product);
+            });
+        });
+
+
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+
+            btn.addEventListener('click', function () {
+
+                const product = {
+                    name: this.dataset.name,
+                    price: parseFloat(this.dataset.price),
+                    image: this.dataset.image
+                };
+
+                addToCart(product);   // 🔥 تستدعي نفس الفنكشن اللي سويناه قبل
+            });
+
+        });
+
+    </script>
 
 
 
