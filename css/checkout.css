@@ -1,0 +1,142 @@
+.checkout-title{
+    text-align:center;
+    margin-top:20px;
+    font-size:28px;
+}
+
+.checkout-wrapper{
+    max-width:1150px;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:1.1fr 1.6fr;
+    gap:35px;
+}
+
+/* LEFT SUMMARY */
+.summary-box{
+    border:1px solid #ddd;
+    border-radius:6px;
+    padding:18px 20px;
+    background:#fafafa;
+}
+
+.summary-box h3{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.summary-total{
+    margin-top:12px;
+    font-size:18px;
+    font-weight:bold;
+    color:#b00000;
+}
+
+.ship-label{
+    margin-top:10px;
+    font-weight:600;
+}
+
+/* RIGHT FORM */
+.checkout-form{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px 18px;
+}
+
+.checkout-form label{
+    font-size:13px;
+    font-weight:600;
+}
+
+.checkout-form input,
+.checkout-form select{
+    width:100%;
+    padding:9px 10px;
+    border-radius:4px;
+    border:1px solid #ccc;
+    font-size:13px;
+}
+
+.checkout-form input:focus,
+.checkout-form select:focus{
+    outline:none;
+    border-color:#b00000;
+}
+
+.full{
+    grid-column:span 2;
+}
+
+.phone-box{
+    display:flex;
+    gap:6px;
+}
+
+.phone-box input:first-child{
+    width:90px;
+}
+
+/* Button */
+.order-btn{
+    margin-top:10px;
+    padding:12px;
+    border:none;
+    font-size:14px;
+    background:#b00000;
+    color:white;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+.order-btn:hover{
+    background:#900000;
+}
+
+/* Responsive */
+@media(max-width:900px){
+    .checkout-wrapper{
+        grid-template-columns:1fr;
+    }
+
+    .checkout-form{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:span 1 !important;
+    }
+}
+
+.privacy-box{
+    margin-top:15px;
+    border:1px solid #ddd;
+    padding:12px 15px;
+    border-radius:6px;
+    background:#fafafa;
+}
+
+.privacy-text{
+    font-size:13px;
+    color:#444;
+    line-height:1.4;
+}
+
+.privacy-text a{
+    color:#b00000;
+    text-decoration:none;
+}
+
+.privacy-text a:hover{
+    text-decoration:underline;
+}
+
+.terms-check{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:10px;
+    font-size:13px;
+    font-weight:600;
+}
+

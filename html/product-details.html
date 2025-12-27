@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Details</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/product-details.css">
+<link rel="icon" type="image/x-icon" href="../assets/icon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+    <img src="../assets/logo.png" class="logo">
+    <div class="search-box">
+        <input type="text" placeholder="Search for products...">
+        <button>Search</button>
+    </div>
+    <div class="icons">
+        <a href="login.html"><i class="fa fa-user"></i></a>
+        <i class="fa fa-heart"></i>
+        <i class="fa fa-shopping-cart" id="cartIcon"></i>
+    </div>
+</nav>
+
+<ul class="menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="internal.html">Internal</a></li>
+    <li><a href="external.html">External</a></li>
+    <li><a href="Variousproducts.html">Various products</a></li>
+</ul>
+
+
+<!-- ================= PRODUCT ================= -->
+<section class="product-wrapper">
+
+    <div class="product-image">
+        <img id="productImg" src="../assets/bmw-lights.jpg">
+    </div>
+
+    <div class="product-info">
+        <h1>
+            LED headlight assembly for BMW 5 Series, model years 2011-2016
+        </h1>
+
+        <p class="short-desc">
+            Dashboard, door, and interior lighting for BMW 5 Series models 2011-2016
+        </p>
+
+        <h2 class="price">
+            <span id="productPrice">1950</span> SAR
+        </h2>
+
+        <button class="add-btn"
+            data-name="BMW LED headlight assembly"
+            data-price="1950"
+            data-image="../assets/bmw-lights.jpg">
+            Add to Cart <i class="fa fa-shopping-basket"></i>
+        </button>
+
+        <p class="stock">2 available in stock</p>
+    </div>
+
+</section>
+
+
+<!-- ================= TABS ================= -->
+<div class="tabs">
+    <button class="tab active" onclick="openTab(event,'desc')">Description</button>
+    <button class="tab" onclick="openTab(event,'cars')">Suitable for cars</button>
+    <button class="tab" onclick="openTab(event,'reviewsTab')">Reviews</button>
+</div>
+
+
+<!-- DESCRIPTION -->
+<div id="desc" class="tab-content show">
+<table class="desc-table">
+<tr><th>Product Name:</th><td>BMW Dashboard, Door, and Interior Lighting</td></tr>
+<tr><th>Car Type:</th><td>BMW</td></tr>
+<tr><th>Models:</th><td>BMW 5 Series 2011–2016</td></tr>
+<tr><th>Material:</th><td>High quality durable plastic</td></tr>
+<tr><th>Installation:</th><td>Requires electrical installation</td></tr>
+</table>
+</div>
+
+
+<!-- CARS -->
+<div id="cars" class="tab-content">
+<p>Suitable for BMW 5 Series models 2011–2016.</p>
+</div>
+
+
+<!-- REVIEWS TAB -->
+<div id="reviewsTab" class="tab-content">
+
+<section class="reviews-section">
+
+    <h3>Customer Reviews</h3>
+
+    <!-- زر إضافة ريفيو -->
+    <button class="add-review-btn" id="openReviewPopup">
+        Add your review
+    </button>
+
+    <!-- مكان عرض الريفيوهات -->
+    <div class="reviews-list" id="reviewsList">
+        <p class="no-reviews">No reviews yet 😴</p>
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- ============== REVIEW POPUP ============== -->
+<div class="review-popup-overlay" id="reviewPopup">
+  <div class="review-popup">
+
+      <div class="popup-header">
+          <h3>Add Your Review</h3>
+          <span class="close-popup" id="closePopup">&times;</span>
+      </div>
+
+      <div class="popup-stars">
+          <i class="fa-regular fa-star" data-value="1"></i>
+          <i class="fa-regular fa-star" data-value="2"></i>
+          <i class="fa-regular fa-star" data-value="3"></i>
+          <i class="fa-regular fa-star" data-value="4"></i>
+          <i class="fa-regular fa-star" data-value="5"></i>
+      </div>
+
+      <form class="popup-review-form">
+          <textarea placeholder="Write your review..."></textarea>
+          <input type="text" placeholder="Your name">
+          <input type="email" placeholder="Your email">
+
+          <button type="submit" class="review-send-btn">Send</button>
+      </form>
+
+  </div>
+</div>
+<!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Quality Assurance</h3>
+                <div class="quality-item">
+                    <div class="quality-title">More than 7,500 products</div>
+                    <div class="quality-desc">Extensive collection of premium car accessories</div>
+                </div>
+                <div class="quality-item">
+                    <div class="quality-title">100% Payment Refund</div>
+                    <div class="quality-desc">Full refund guarantee on all purchases</div>
+                </div>
+                <div class="quality-item">
+                    <div class="quality-title">Free Shipping</div>
+                    <div class="quality-desc">For orders over 289 Saudi Riyal</div>
+                </div>
+            </div>
+
+
+            <div class="footer-section">
+                <h3>Pages</h3>
+                <ul class="pages-list">
+                    <li><a href="#">Who are we?</a></li>
+                    <li><a href="#">Shipping and Delivery</a></li>
+                    <li><a href="#">Privacy Notice</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">Return and servicing policy</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+            </div>
+
+
+            <div class="footer-section">
+                <h3>We Are On Social Media Platforms</h3>
+                <p class="social-text">If you have any questions, you can contact us all:</p>
+
+                <div class="social-icons">
+                    <a href="#" class="social-icon facebook" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon twitter" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon instagram" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon whatsapp" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" class="social-icon youtube" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="footer-section">
+                <h3>Who are we?</h3>
+                <p class="about-text">A store specializing in car accessories and personal accessories. A financial
+                    basis scheme All Magicians Trading Establishment C.R (68202196/79).</p>
+                <div class="cr-number">Commercial Registration: 68202196/79</div>
+            </div>
+        </div>
+
+
+        <div class="copyright">
+            <div>All Rights Reserved. <span>Enhancements</span> Copyright © 2025</div>
+        </div>
+    </footer>
+
+
+      <!-- Cart Overlay -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+
+        <div class="cart-header">
+            <button id="cartCloseBtn" class="cart-close">
+                <i class="fa fa-times"></i>
+                <span>CLOSING</span>
+            </button>
+
+            <span class="cart-title">SHOPPING CART</span>
+        </div>
+
+        <div id="cartItems" class="cart-items">
+            <!-- JS will inject items here -->
+            <p class="empty-cart">No products in the cart.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total (Including VAT)</span>
+                <span id="cartTotal">0 SAR</span>
+            </div>
+
+            <div class="cart-footer-buttons">
+                <button class="cart-btn primary" onclick="window.location.href='checkout.html'">Complete the order</button>
+                <button  class="cart-btn secondary" onclick="window.location.href='cart.html'">Basket display</button>
+            </div>
+        </div>
+
+    </div>
+
+      <script>
+
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartCloseBtn = document.getElementById('cartCloseBtn');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartItemsBox = document.getElementById('cartItems');
+        const cartTotalEl = document.getElementById('cartTotal');
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        renderCart();
+
+
+
+        function openCart() {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('show');
+        }
+
+
+        function closeCart() {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        }
+
+
+        function renderCart() {
+            cartItemsBox.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsBox.innerHTML = '<p class="empty-cart">No products in the cart.</p>';
+                cartTotalEl.textContent = '0 SAR';
+                return;
+            }
+
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.qty;
+
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+
+                div.innerHTML = `
+                <img src="${item.image}" alt="">
+                <div class="cart-item-info">
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-price">${item.price} SAR</div>
+                    <div class="cart-item-qty">Qty: ${item.qty}</div>
+                </div>
+            `;
+
+                cartItemsBox.appendChild(div);
+            });
+
+            cartTotalEl.textContent = total + ' SAR';
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+        }
+
+        function addToCart(product) {
+
+            const existing = cart.find(p => p.name === product.name);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            renderCart();
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            openCart();
+        }
+
+        // ربط أيقونة الكارت
+        if (cartIcon) {
+            cartIcon.addEventListener('click', openCart);
+        }
+
+        // زر الإغلاق
+        cartCloseBtn.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // ربط أزرار Add to cart
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const product = {
+                    name: this.dataset.name,
+                    price: parseFloat(this.dataset.price),
+                    image: this.dataset.image || '../assets/logo.png'
+                };
+                addToCart(product);
+            });
+        });
+
+
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+
+            btn.addEventListener('click', function () {
+
+                const product = {
+                    name: this.dataset.name,
+                    price: parseFloat(this.dataset.price),
+                    image: this.dataset.image
+                };
+
+                addToCart(product);   
+            });
+
+        });
+
+    </script>
+
+
+
+
+
+
+<!-- ========== JS ========= -->
+<script>
+function openTab(evt, tabId){
+    document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("show"));
+    document.getElementById(tabId).classList.add("show");
+
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    evt.target.classList.add("active");
+}
+
+// ================= POPUP CONTROL =================
+const openPopup = document.getElementById("openReviewPopup");
+const reviewPopup = document.getElementById("reviewPopup");
+const closePopup = document.getElementById("closePopup");
+
+openPopup.onclick = () => reviewPopup.style.display = "flex";
+closePopup.onclick = () => reviewPopup.style.display = "none";
+window.onclick = e => e.target === reviewPopup ? reviewPopup.style.display="none" : null;
+
+
+// ================= STAR RATING =================
+let selectedRating = 0;
+const popupStars = document.querySelectorAll(".popup-stars i");
+
+popupStars.forEach(star=>{
+    star.addEventListener("click", ()=>{
+        selectedRating = star.dataset.value;
+        popupStars.forEach(s=> s.classList.remove("active"));
+        for(let i=0;i<selectedRating;i++){
+            popupStars[i].classList.add("active");
+        }
+    });
+});
+
+// ================= ADD REVIEW =================
+const popupForm = document.querySelector(".popup-review-form");
+const reviewsList = document.getElementById("reviewsList");
+const emptyMsg = document.querySelector(".no-reviews");
+
+popupForm.addEventListener("submit",(e)=>{
+    e.preventDefault();
+
+    const text = popupForm.querySelector("textarea").value;
+    const name = popupForm.querySelector("input[type='text']").value;
+
+    if(selectedRating == 0){
+        alert("Please rate ⭐");
+        return;
+    }
+
+    const card = document.createElement("div");
+    card.className="review-card";
+
+    card.innerHTML = `
+        <div class="review-header">
+            <div>
+                <div class="review-name">${name || "Customer"}</div>
+            </div>
+            <div class="review-stars">
+                ${"★".repeat(selectedRating)}${"☆".repeat(5-selectedRating)}
+            </div>
+        </div>
+
+        <div class="review-text">${text}</div>
+    `;
+
+    reviewsList.prepend(card);
+
+    popup.classList.remove("show");
+    popupForm.reset();
+    popupStars.forEach(s=> s.classList.remove("active"));
+    selectedRating = 0;
+
+    if(emptyMsg) emptyMsg.style.display = "none";
+});
+</script>
+
+
+<script src="../js/cart.js"></script>
+
+</body>
+</html>

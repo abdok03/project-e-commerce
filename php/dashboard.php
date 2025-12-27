@@ -18,7 +18,7 @@
     <div class="icons">
         <a href="login.html"><i class="fa fa-user"></i></a>
         <i class="fa fa-heart"></i>
-        <i class="fa fa-shopping-cart"></i>
+        <i class="fa fa-shopping-cart" id="cartIcon"></i>
     </div>
 
 </nav>
