@@ -1,6 +1,6 @@
 <?php
 class Database {
-    private $db_name = "car_sstore";
+    private $db_name = "car_store";
     private $host = "localhost";
     private $username = "root";
     private $password = "";
@@ -16,7 +16,7 @@ class Database {
             $this->coon->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $this->coon;
         } catch (PDOException $e) {
-            echo "خطأ في الاتصال بقاعدة البيانات: " . $e->getMessage();
+            // echo "خطأ في الاتصال بقاعدة البيانات: " . $e->getMessage();
             return null;
         }
     }
