@@ -18,7 +18,7 @@
     <div class="icons">
         <a href="login.html"><i class="fa fa-user"></i></a>
         <i class="fa fa-heart"></i>
-        <i class="fa fa-shopping-cart"></i>
+        <i class="fa fa-shopping-cart" id="cartIcon"></i>
     </div>
 
 </nav>
@@ -26,8 +26,8 @@
 <ul class="menu">
     <li class="active">Home</li>
     <li>Interior</li>
-    <li>Exterior</li>
-    <li>Miscellaneous Products</li>
+    <li>External</li>
+    <li>Various products</li>
     <li>Lighting</li>
     <li>Interior Center</li>
     <li>Keys</li>
@@ -175,12 +175,12 @@
 
         <div class="brand">
             <img src="../assets/الجزء-الأمامي-150x150.png">
-            <p>Exterior</p>
+            <p>External</p>
         </div>
 
         <div class="brand">
             <img src="../assets/تخييم-150x150.png">
-            <p>Miscellaneous Products</p>
+            <p>Various products</p>
         </div>
 
         <div class="brand">

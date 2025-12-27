@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Carbon Chromes</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../assets/icon.png">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <img src="../assets/logo.png" class="logo">
+        <div class="search-box">
+            <input type="text" placeholder="Search for products...">
+            <button>Search</button>
+        </div>
+        <div class="icons">
+            <a href="login.html"><i class="fa fa-user"></i></a>
+            <i class="fa fa-heart"></i>
+            <i class="fa fa-shopping-cart" id="cartIcon"></i>
+
+        </div>
+
+    </nav>
+
+    <ul class="menu">
+        <li ><a href="index.html">Home</a></li>
+        <li><a href="internal.html">Internal</a></li>
+        <li><a href="external.html">External</a></li>
+        <li><a href="Variousproducts.html">Various products</a></li>
+    </ul>
+    <div class="cart-container">
+
+    <!-- LEFT CART TABLE -->
+    <div class="cart-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>PRODUCT</th>
+                    <th>THE PRICE</th>
+                    <th>QUANTITY</th>
+                    <th>THE TOTAL</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody id="cartPageItems">
+                
+            </tbody>
+        </table>
+    </div>
+
+    <!-- RIGHT SUMMARY BOX -->
+    <div class="summary">
+        <h3>TOTAL SHOPPING CART</h3>
+
+        <p class="summary-total" id="cartGrandTotal">0 SAR</p>
+
+        <button class="checkout-btn">
+            To complete the application
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartPageItems = document.getElementById("cartPageItems");
+const totalBox = document.getElementById("cartGrandTotal");
+
+renderCartPage();
+
+
+function renderCartPage(){
+
+    cartPageItems.innerHTML = "";
+
+    if(cart.length === 0){
+        cartPageItems.innerHTML = `
+        <tr>
+            <td colspan="5">No products in cart.</td>
+        </tr>
+        `;
+        totalBox.textContent = "0 SAR";
+        return;
+    }
+
+    let total = 0;
+
+    cart.forEach((item,index)=>{
+
+        let itemTotal = item.price * item.qty;
+        total += itemTotal;
+
+        cartPageItems.innerHTML += `
+        <tr>
+            <td>
+                <img src="${item.image}">
+                <p>${item.name}</p>
+            </td>
+
+            <td>${item.price} SAR</td>
+
+            <td>
+                <input type="number" class="qty-box" value="${item.qty}" min="1"
+                onchange="updateQty(${index}, this.value)">
+            </td>
+
+            <td>${itemTotal} SAR</td>
+
+            <td>
+                <span class="remove-btn" onclick="removeItem(${index})">✖</span>
+            </td>
+        </tr>`;
+    });
+
+    totalBox.textContent = total + " SAR";
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+
+function updateQty(index,val){
+    cart[index].qty = parseInt(val);
+    renderCartPage();
+}
+
+
+function removeItem(index){
+    cart.splice(index,1);
+    renderCartPage();
+}
+
+</script>
+
+
+    </body>
+</html>
