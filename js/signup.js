@@ -125,31 +125,27 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmPasswordInput.addEventListener('input', checkPasswordMatch);
     }
     
-    // Form submission
-    const form = document.getElementById('signupForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+    // // Form submission
+    // const form = document.getElementById('signupForm');
+    // if (form) {
+    //     form.addEventListener('submit', function(e) {
+    //         e.preventDefault();
             
-            // Basic validation
-            const password = passwordInput.value;
-            const confirmPassword = confirmPasswordInput.value;
-            const terms = document.getElementById('terms').checked;
+    //         const password = passwordInput.value;
+    //         const confirmPassword = confirmPasswordInput.value;
+    //         const terms = document.getElementById('terms').checked;
             
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
+    //         if (password !== confirmPassword) {
+    //             alert('Passwords do not match!');
+    //             return;
+    //         }
             
-            if (!terms) {
-                alert('Please agree to the Terms of Service and Privacy Policy');
-                return;
-            }
+    //         if (!terms) {
+    //             alert('Please agree to the Terms of Service and Privacy Policy');
+    //             return;
+    //         }
             
-            // If all validations pass, submit the form
-            // In real application, you would send data to server here
-            alert('Account created successfully! Redirecting to login page...');
-            // window.location.href = 'login.html';
-        });
-    }
+    //         alert('Account created successfully! Redirecting to login page...');
+    //     });
+    // }
 });

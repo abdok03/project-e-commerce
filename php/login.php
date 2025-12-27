@@ -4,10 +4,6 @@ require_once "../includes/guest_only.php";
 require_once "../config/database.php";
 require_once "../classes/user.php";
 $db = (new Database())->connecte();
-if (!$db) {
-    die("<p style='color:red;'>فشل الاتصال بقاعدة البيانات ❌</p>");
-}
-
 $user = new Users($db);
 
 $phone = trim($_POST['phone_number'] ?? '');
@@ -56,4 +52,3 @@ if ($_SESSION['role'] === 'admin') {
     header('Location: ../html/index.php');
 }
 exit;
-?>
