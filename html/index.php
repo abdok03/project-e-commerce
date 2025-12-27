@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../html/login.html'); // إذا لم يسجل الدخول، رجع لصفحة تسجيل الدخول
+    exit;
+}
 require_once "../includes/auth.php";
 require_once "../config/database.php";
 

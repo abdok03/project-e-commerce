@@ -1,56 +1,59 @@
 <?php
 session_start();
-// require_once "../includes/guest_only.php";
+require_once "../includes/guest_only.php";
 require_once "../config/database.php";
 require_once "../classes/user.php";
-
-
 $db = (new Database())->connecte();
+if (!$db) {
+    die("<p style='color:red;'>فشل الاتصال بقاعدة البيانات </p>");
+}
+
 $user = new Users($db);
 
 $phone = trim($_POST['phone_number'] ?? '');
 $password = $_POST['password'] ?? '';
 
 if (empty($phone) || empty($password)) {
-    die("Please fill in all fields");
+    die("<p style='color:red;'>الرجاء تعبئة جميع الحقول</p>");
 }
 
-if (!preg_match('/^(?:\+962|0)?7[789][0-9]{7}$/', $phone)) {
-    die("Invalid phone number format");
+$phone_clean = preg_replace('/[^0-9]/', '', $phone);
+
+if (strlen($phone_clean) === 9 && $phone_clean[0] === '7') {
+    $phone_final = '0' . $phone_clean;
+} elseif (strlen($phone_clean) === 10 && $phone_clean[0] === '0') {
+    $phone_final = '+962' . substr($phone_clean, 1); 
+} elseif (strlen($phone_clean) === 12 && substr($phone_clean, 0, 3) === '962') {
+    $phone_final = '+' . $phone_clean;             
+} elseif (strlen($phone_clean) === 13 && substr($phone_clean, 0, 4) === '9627') {
+    $phone_final = '+' . substr($phone_clean, 0); 
+} else {
+    die("<p style='color:red;'>رقم الهاتف غير صالح</p>");
 }
 
-if (strlen($phone) === 9 && $phone[0] === '7') {
-    $phone = '0' . $phone;
-}
-
-if (str_starts_with($phone, '+962')) {
-    $phone = '0' . substr($phone, 4);
-}
-
-$query = "SELECT * FROM users WHERE phone_number = :phone LIMIT 1";
-$stmt = $db->prepare($query);
-$stmt->bindParam(":phone", $phone);
+$stmt = $db->prepare("SELECT * FROM users WHERE phone_number = :phone LIMIT 1");
+$stmt->bindParam(":phone", $phone_final);
 $stmt->execute();
 
 if ($stmt->rowCount() === 0) {
-    die("Phone number is not registered");
+    die("<p style='color:red;'>رقم الهاتف غير مسجل</p>");
 }
 
 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!password_verify($password, $data['password'])) {
-    die("Incorrect password");
+    die("<p style='color:red;'>كلمة المرور خاطئة</p>");
 }
+
 session_regenerate_id(true);
 $_SESSION['user_id'] = $data['id'];
 $_SESSION['user_name'] = $data['name'];
-$_SESSION['role'] = $data['role'];
+$_SESSION['role'] = $data['role'] ?? 'user';
 
-
-if ($_SESSION['role'] == 'admin') {
-
+if ($_SESSION['role'] === 'admin') {
     header('Location: ../admin/html/dashbord.php');
 } else {
     header('Location: ../html/index.php');
 }
 exit;
+?>
