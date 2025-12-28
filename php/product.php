@@ -1,10 +1,24 @@
+<?php
+include "../config/database.php";
+
+$dbObj = new Database();
+$db = $dbObj->connecte();
+
+$carType = "Porsche";
+
+$q = $db->prepare("SELECT * FROM car_products WHERE car_type = ?");
+$q->execute([$carType]);
+$products = $q->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8">
     <title>Carbon Chromes</title>
-    <link rel="stylesheet" href="porsche.css">
+    <link rel="stylesheet" href="../Car page/porsche.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -771,6 +785,43 @@ body{
 
     </div>
 </section>
+
+<section class="products-section">
+    <h2>Available Products</h2>
+
+    <div class="products-grid">
+
+        <?php if(empty($products)): ?>
+
+            <h2 style="text-align:center; color:red; width:100%;">
+                Product Not Found
+            </h2>
+
+        <?php else: ?>
+
+            <?php foreach($products as $p): ?>
+            
+            <div class="product-card">
+                <img src="../uploads/<?= $p['image'] ?>" alt="">
+                
+                <h3><?= $p['name'] ?></h3>
+
+                <p><?= $p['price'] ?> SAR</p>
+
+                <a href="single_product.php?id=<?= $p['id'] ?>" class="view-btn">
+                    View Details
+                </a>
+            </div>
+
+            <?php endforeach; ?>
+
+        <?php endif; ?>
+
+    </div>
+</section>
+
+
+
 
 <section class="faq-section">
 

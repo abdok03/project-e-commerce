@@ -43,53 +43,53 @@
 
         <div class="porsche-grid">
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=1" class="porsche-item">
                 <img src="Candle bottles.webp" alt="">
                 <p>Candle bottles</p>
             </a>
 
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=2" class="porsche-item">
                 <img src="Porsche spark plug skins.webp" alt="">
                 <p>Porsche spark plug skins</p>
             </a>
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=3" class="porsche-item">
                 <img src="Bag logos.webp" alt="">
                 <p>Bag logos</p>
             </a>
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=4" class="porsche-item">
                 <img src="porsche wings.webp" alt="">
                 <p>Porsche Wings</p>
             </a>
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=5" class="porsche-item">
                 <img src="projector.webp" alt="">
                 <p>Projector</p>
             </a>
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=6" class="porsche-item">
                 <img src="Air conditioner fins and decorations.webp" alt="">
                 <p>Air conditioner fins and decorations</p>
             </a>
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=7" class="porsche-item">
                 <img src="Door buttons.webp" alt="">
                 <p>Door buttons</p>
             </a>
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=8" class="porsche-item">
                 <img src="Key cover.webp" alt="">
                 <p>Key cover</p>
             </a>
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=9" class="porsche-item">
                 <img src="medal.webp" alt="">
                 <p>medal</p>
             </a>
 
-            <a href="product.html" class="porsche-item">
+            <a href="../php/product.php?id=10" class="porsche-item">
                 <img src="Wheel covers.webp" alt="">
                 <p>Wheel covers</p>
             </a>
