@@ -2,5 +2,5 @@
 require_once "auth.php";
 
 if ($_SESSION['role'] !== 'admin') {
-    die("Access Denied ");
+    die(" ");
 }

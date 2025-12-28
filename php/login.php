@@ -18,11 +18,11 @@ $phone_clean = preg_replace('/[^0-9]/', '', $phone);
 if (strlen($phone_clean) === 9 && $phone_clean[0] === '7') {
     $phone_final = '0' . $phone_clean;
 } elseif (strlen($phone_clean) === 10 && $phone_clean[0] === '0') {
-    $phone_final = '+962' . substr($phone_clean, 1); 
+    $phone_final = '+962' . substr($phone_clean, 1);
 } elseif (strlen($phone_clean) === 12 && substr($phone_clean, 0, 3) === '962') {
-    $phone_final = '+' . $phone_clean;             
+    $phone_final = '+' . $phone_clean;
 } elseif (strlen($phone_clean) === 13 && substr($phone_clean, 0, 4) === '9627') {
-    $phone_final = '+' . substr($phone_clean, 0); 
+    $phone_final = '+' . substr($phone_clean, 0);
 } else {
     die("<p style='color:red;'>رقم الهاتف غير صالح</p>");
 }
@@ -49,6 +49,6 @@ $_SESSION['role'] = $data['role'] ?? 'user';
 if ($_SESSION['role'] === 'admin') {
     header('Location: ../admin/html/dashbord.php');
 } else {
-    header('Location: ../html/profile.php');
+    header('Location: ../html/index.php');
 }
 exit;

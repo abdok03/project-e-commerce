@@ -1,6 +1,10 @@
 <?php
 require_once "../../includes/admin_only.php";
 require_once "../../config/database.php";
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../../index.html");
+    exit;
+}
 
 $db = (new Database())->connecte();
 
