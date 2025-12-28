@@ -32,39 +32,39 @@ $stmt = $db->query("SELECT * FROM products ORDER BY id DESC");
         }
 
         /* .sidebar {
-            width: 250px;
-            background: #111;
-            color: #fff;
-            transition: 0.3s;
-        }
+                width: 250px;
+                background: #111;
+                color: #fff;
+                transition: 0.3s;
+            }
 
-        .sidebar h2 {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #333;
-        }
+            .sidebar h2 {
+                padding: 20px;
+                text-align: center;
+                border-bottom: 1px solid #333;
+            }
 
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+            .sidebar ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
 
-        .sidebar ul li {
-            border-bottom: 1px solid #333;
-        }
+            .sidebar ul li {
+                border-bottom: 1px solid #333;
+            }
 
-        .sidebar ul li a {
-            display: block;
-            padding: 15px 20px;
-            color: #fff;
-            text-decoration: none;
-            transition: 0.2s;
-        }
+            .sidebar ul li a {
+                display: block;
+                padding: 15px 20px;
+                color: #fff;
+                text-decoration: none;
+                transition: 0.2s;
+            }
 
-        .sidebar ul li a:hover {
-            background: #444;
-        } */
+            .sidebar ul li a:hover {
+                background: #444;
+            } */
 
         .content {
             flex: 1;
@@ -184,7 +184,7 @@ $stmt = $db->query("SELECT * FROM products ORDER BY id DESC");
                             if (!empty($row['image_url'])) {
                                 $fullPath = __DIR__ . '/../../' . $row['image_url'];
                                 if (file_exists($fullPath)) {
-                                    echo '<img src="/PROJECT-E-COMMERCE/' . $row['image_url'] . '" width="80">';
+                                    echo '<img src="/car_e-c/project-e-commerce/' . $row['image_url'] . '" width="80">';
                                 } else {
                                     echo 'الصورة غير موجودة على السيرفر: ' . htmlspecialchars($row['image_url']);
                                 }
@@ -193,6 +193,7 @@ $stmt = $db->query("SELECT * FROM products ORDER BY id DESC");
                             }
                             ?>
                         </td>
+
 
 
 

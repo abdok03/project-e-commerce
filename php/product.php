@@ -29,8 +29,25 @@ $products = $q->fetchAll(PDO::FETCH_ASSOC);
                 <h2 style="text-align:center; color:red; width:100%;">Product Not Found</h2>
             <?php else: ?>
                 <?php foreach ($products as $p): ?>
+                    <?php
+                    echo '../uploads/' . $p['image_url'];
+                    ?>
+
                     <div class="product-card">
-                        <img src="../uploads/<?= $p['image_url'] ?>" alt="<?= htmlspecialchars($p['name']) ?>">
+                        <?php
+                        // مسار السيرفر للصور
+                        $imagePath = __DIR__ . '/../uploads/' . $p['image_url'];
+                        // URL للعرض في المتصفح
+                        $imageUrl = 'http://localhost/car_e-c/project-e-commerce/uploads/' . $p['image_url'];
+
+                        if (file_exists($imagePath)) {
+                            echo '<img src="' . $imageUrl . '" alt="' . htmlspecialchars($p['name']) . '">';
+
+                        } else {
+                            echo 'الصورة غير موجودة';
+                        }
+                        ?>
+
                         <h3><?= htmlspecialchars($p['name']) ?></h3>
                         <p><?= $p['price'] ?> SAR</p>
 

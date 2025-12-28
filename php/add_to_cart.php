@@ -29,8 +29,11 @@ if ($cart) {
 }
 
 $product_id = (int) $_POST['product_id'];
-$stmt = $db->prepare("INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, 1)");
-$stmt->execute([$cart_id, $product_id]);
+$quantity = isset($_POST['quantity']) ? (int) $_POST['quantity'] : 1;
+
+$stmt = $db->prepare("INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, ?)");
+$stmt->execute([$cart_id, $product_id, $quantity]);
+
 
 header("Location: carts.php");
 exit;
