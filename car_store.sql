@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2025 at 08:16 PM
+-- Generation Time: Dec 28, 2025 at 07:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `car_store`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `addresses`
+--
+
+CREATE TABLE `addresses` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `full_name` varchar(150) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `country` varchar(50) DEFAULT 'Jordan',
+  `city` varchar(100) NOT NULL,
+  `area` varchar(100) NOT NULL,
+  `street` varchar(150) NOT NULL,
+  `postal_code` varchar(20) DEFAULT NULL,
+  `is_default` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -166,11 +186,19 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `phone_number`, `password`, `role`, `created_at`, `updated_at`, `email`) VALUES
 (5, 'abdullah', '0796920339', '$2y$10$fSLa1sFEhtqU.NOvF4BnTeWCwxLVcZHFHpxQO.H7l9ldzmWT8PcP6', 'admin', '2025-12-26 23:36:06', '2025-12-26 23:56:54', NULL),
-(6, 'aas', '0796920222', '$2y$10$HZT2PL3WrIqjSspdZKu42Og01yefBXod7aFhRW23D.MEn9YUpYmnS', 'user', '2025-12-27 13:30:52', '2025-12-27 13:30:52', NULL);
+(6, 'aas', '0796920222', '$2y$10$HZT2PL3WrIqjSspdZKu42Og01yefBXod7aFhRW23D.MEn9YUpYmnS', 'user', '2025-12-27 13:30:52', '2025-12-27 13:30:52', NULL),
+(12, 'rubaalkhatib', '798706042', 'Password@123!', 'user', '2025-12-27 21:55:25', '2025-12-27 21:55:25', 'ruba.alkhatib16@gmail.com');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_address_user` (`user_id`);
 
 --
 -- Indexes for table `carts`
@@ -235,6 +263,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
@@ -280,11 +314,17 @@ ALTER TABLE `product_reviews`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `addresses`
+--
+ALTER TABLE `addresses`
+  ADD CONSTRAINT `fk_address_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `carts`

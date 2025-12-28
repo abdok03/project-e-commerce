@@ -4,6 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (isset($_SESSION['user_id'])) {
-    header("Location: ../html/index.html");
+    header("Location: ../html/profile.php");
     exit;
 }

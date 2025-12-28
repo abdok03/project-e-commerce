@@ -49,6 +49,6 @@ $_SESSION['role'] = $data['role'] ?? 'user';
 if ($_SESSION['role'] === 'admin') {
     header('Location: ../admin/html/dashbord.php');
 } else {
-    header('Location: ../html/index.php');
+    header('Location: ../html/profile.php');
 }
 exit;

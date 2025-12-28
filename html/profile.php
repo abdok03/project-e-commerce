@@ -60,598 +60,11 @@ $addresses = $addressObj->getUserAddresses($user_id);
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <style>
-        .account-page {
-            display: grid;
-            grid-template-columns: 260px auto;
-            min-height: 80vh;
-            background: #fff;
-        }
-
-
-        .account-sidebar {
-            background: #111;
-            color: white;
-            padding: 25px;
-        }
-
-        .account-sidebar h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        .account-sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .account-sidebar li {
-            padding: 12px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            border-radius: 6px;
-        }
-
-        .account-sidebar li:hover {
-            background: #e10600;
-        }
-
-        .account-sidebar .active {
-            background: #e10600;
-        }
-
-        .logout {
-            margin-top: 50px;
-            color: #ff6961;
-        }
-
-        /* Content */
-        .account-content {
-            padding: 40px;
-        }
-
-        .welcome-box {
-            background: #f5f5f5;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-
-        .account-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-        }
-
-        .card button {
-            margin-top: 10px;
-            border: none;
-            padding: 8px 12px;
-            background: #e10600;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-
-        .orders-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .orders-table th,
-        .orders-table td {
-            border-bottom: 1px solid #ddd;
-            padding: 12px;
-        }
-
-        .badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            color: white;
-        }
-
-        .shipped {
-            background: #28a745;
-        }
-
-        .pending {
-            background: #ffc107;
-            color: #333;
-        }
-
-        .small-btn {
-            background: #e10600;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .address-box {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-            margin-bottom: 20px;
-        }
-
-        .account-btn {
-            background: #e10600;
-            padding: 10px 15px;
-            border: none;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .delete-btn {
-            background: #444;
-            padding: 10px 15px;
-            border: none;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        /* Popup */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, .6);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-box {
-            background: #fff;
-            padding: 25px;
-            width: 400px;
-            border-radius: 10px;
-        }
-
-        .account-info-box {
-            background: #f5f5f5;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .account-info-box p {
-            margin-bottom: 10px;
-        }
-
-        .account-info-box strong {
-            display: inline-block;
-            width: 80px;
-        }
-
-        .modal-box input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-        }
-
-        .modal-box button {
-            margin-right: 10px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .modal-box button:first-of-type {
-            background: #e10600;
-            color: white;
-        }
-
-        .modal-box button:last-of-type {
-            background: #ddd;
-            color: #333;
-        }
-
-        .order-filters {
-            margin: 15px 0;
-        }
-
-        .filter-btn {
-            padding: 8px 14px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            margin-right: 8px;
-            cursor: pointer;
-            background: #fff;
-        }
-
-        .filter-btn.active {
-            background: #e10600;
-            color: white;
-            border: none;
-        }
-
-        .orders-list {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .order-card {
-            background: white;
-            padding: 18px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
-        }
-
-        .order-top {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .order-id {
-            font-weight: bold;
-        }
-
-        .order-date,
-        .order-total {
-            margin: 5px 0;
-            color: #555;
-        }
-
-        .badge {
-            padding: 6px 10px;
-            border-radius: 20px;
-            color: white;
-        }
-
-        .shipped {
-            background: #28a745;
-        }
-
-        .pending {
-            background: #ffc107;
-            color: #333;
-        }
-
-        .canceled {
-            background: #d9534f;
-        }
-
-
-        #orderModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, .6);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        #orderModal .modal-box {
-            background: #fff;
-            padding: 25px;
-            width: 400px;
-            border-radius: 10px;
-        }
-
-        #orderModal .modal-box h3 {
-            margin-bottom: 15px;
-        }
-
-        #orderModal button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            border: none;
-            background: #e10600;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .address-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        .address-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
-            border: 1px solid #eee;
-        }
-
-        .address-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .address-header i {
-            font-size: 20px;
-            color: #e10600;
-        }
-
-        .address-header h3 {
-            margin: 0;
-        }
-
-        .address-body {
-            margin: 15px 0;
-            line-height: 1.6;
-            color: #333;
-            font-size: 14px;
-        }
-
-        .address-btn {
-            background: #e10600;
-            padding: 8px 12px;
-            border: none;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-
-        /* Stats Section */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-            border: 1px solid #eee;
-        }
-
-        .stat-card i {
-            font-size: 28px;
-            color: #e10600;
-            margin-bottom: 8px;
-        }
-
-        .stat-card h3 {
-            font-size: 24px;
-            margin: 5px 0;
-        }
-
-        .stat-card p {
-            color: #555;
-        }
-
-        /* Big action cards */
-        .big-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-            border: 1px solid #eee;
-        }
-
-        .big-card button {
-            background: #e10600;
-            color: white;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .big-card:hover {
-            transform: translateY(-3px);
-            transition: 0.3s;
-        }
-
-        /* ========== CART OVERLAY + SIDEBAR ========== */
-
-        .cart-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .55);
-            z-index: 900;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity .3s ease;
-        }
-
-        /* لما نفتح الكارت */
-        .cart-overlay.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: -420px;
-            width: 400px;
-            height: 100vh;
-            background: #fff;
-            z-index: 9999;
-            box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
-            overflow-y: auto;
-            transition: right .35s ease;
-        }
-
-        .cart-sidebar.open {
-            right: 0;
-        }
-
-        /* Header */
-        .cart-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 18px;
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-            position: sticky;
-            top: 0;
-            background: #fff;
-            z-index: 10;
-
-
-        }
-
-
-
-        .cart-close {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: none;
-            border: none;
-            font-size: 12px;
-            cursor: pointer;
-            color: #111;
-        }
-
-        .cart-close i {
-            font-size: 14px;
-        }
-
-        .cart-title {
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        /* Body */
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px 18px;
-        }
-
-        .empty-cart {
-            font-size: 14px;
-            color: #666;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        /* Cart item */
-        .cart-item {
-            display: flex;
-            gap: 10px;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-item img {
-            width: 65px;
-            height: 65px;
-            object-fit: cover;
-        }
-
-        .cart-item-info {
-            font-size: 14px;
-        }
-
-
-
-        .cart-item-name {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .cart-item-price {
-            color: #b00000;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .cart-item-qty {
-            font-size: 12px;
-            color: #777;
-        }
-
-        /* Footer */
-        .cart-footer {
-            border-top: 1px solid #eee;
-            padding: 12px 18px 16px;
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-
-        .cart-total span:last-child {
-            font-weight: 700;
-        }
-
-        .cart-footer-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .cart-btn {
-            flex: 1;
-            padding: 9px 8px;
-            font-size: 12px;
-            border-radius: 3px;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .cart-btn.primary {
-            background: #111;
-            color: #fff;
-        }
-
-        .cart-btn.secondary {
-            background: #e4e4e4;
-            color: #333;
-        }
-
-        /* Scrollbar بسيط */
-        .cart-items::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .cart-items::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 3px;
-        }
-    </style>
-
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
+<style>
+    
+</style>
 
 <body>
     <nav class="navbar">
@@ -794,45 +207,49 @@ $addresses = $addressObj->getUserAddresses($user_id);
 
         <div id="addressSection" style="display:none" class="account-content">
 
-<h2>My Addresses</h2>
-
-<div class="address-grid">
-
-<?php if(empty($addresses)): ?>
-    <p class="no-address">No Addresses Found </p>
-
-<?php else: ?>
-    <?php foreach($addresses as $a): ?>
-        <div class="address-card <?= $a['is_default'] ? 'default' : '' ?>">
-
-            <div class="address-header">
-                <i class="fa-solid fa-location-dot"></i>
-                <h3><?= $a['is_default'] ? 'Default Address' : 'Address' ?></h3>
+            <div class="address-top">
+                <h2>My Addresses</h2>
+                <button class="add-address-btn" onclick="openAddressModal('shipping')">
+                    <i class="fa-solid fa-plus"></i> Add Address
+                </button>
             </div>
 
-            <div class="address-body">
-                <?= $a['full_name'] ?><br>
-                <?= $a['city'] ?> - <?= $a['area'] ?><br>
-                <?= $a['street'] ?><br>
-                <?= $a['phone'] ?>
+            <div class="address-grid">
+                <?php if (empty($addresses)): ?>
+                    <p class="no-address">No Addresses Found</p>
+
+                    <button class="address-btn" onclick="openAddressModal()">
+                        Add Address
+                    </button>
+
+                <?php else: ?>
+                    <?php foreach ($addresses as $a): ?>
+                        <div class="address-card <?= $a['is_default'] ? 'default' : '' ?>">
+
+                            <div class="address-header">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <h3><?= $a['is_default'] ? 'Default Address' : 'Address' ?></h3>
+                            </div>
+
+                            <div class="address-body">
+                                <?= $a['full_name'] ?><br>
+                                <?= $a['city'] ?> - <?= $a['area'] ?><br>
+                                <?= $a['street'] ?><br>
+                                <?= $a['phone'] ?>
+                            </div>
+
+                            <button class="address-btn" onclick="setDefault(<?= $a['id'] ?>)">Make Default</button>
+
+                            <button class="address-btn" style="background:#444"
+                                onclick="deleteAddress(<?= $a['id'] ?>)">Delete</button>
+
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
             </div>
-
-            <button class="address-btn" onclick="setDefault(<?= $a['id'] ?>)">
-                Make Default
-            </button>
-
-            <button class="address-btn" style="background:#444"
-                    onclick="deleteAddress(<?= $a['id'] ?>)">
-                Delete
-            </button>
 
         </div>
-    <?php endforeach; ?>
-<?php endif; ?>
-
-</div>
-
-</div>
 
 
 
@@ -1027,7 +444,7 @@ $addresses = $addressObj->getUserAddresses($user_id);
                     image: this.dataset.image
                 };
 
-                addToCart(product); 
+                addToCart(product);
             });
 
         });
@@ -1128,27 +545,29 @@ $addresses = $addressObj->getUserAddresses($user_id);
             }
         });
 
-       function updateUser(){
- let name = editName.value;
- let email = editEmail.value;
- let phone = editPhone.value;
+        function updateUser() {
+            let name = editName.value;
+            let email = editEmail.value;
+            let phone = editPhone.value;
 
- fetch("../php/update_user.php",{
-   method:"POST",
-   headers:{ "Content-Type":"application/x-www-form-urlencoded" },
-   body:`name=${name}&email=${email}&phone=${phone}`
- })
- .then(res=>res.text())
- .then(data=>{
-    if(data==="success"){
-        userName.innerText=name;
-        userEmail.innerText=email;
-        userPhone.innerText=phone;
-        closeModal();
-        alert("Updated Successfully!");
-    }
- })
-}
+            fetch("../php/update_user.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: `name=${name}&email=${email}&phone=${phone}`
+                })
+                .then(res => res.text())
+                .then(data => {
+                    if (data === "success") {
+                        userName.innerText = name;
+                        userEmail.innerText = email;
+                        userPhone.innerText = phone;
+                        closeModal();
+                        alert("Updated Successfully!");
+                    }
+                })
+        }
 
 
         document.getElementById("deleteBtn").onclick = function() {
@@ -1214,8 +633,8 @@ $addresses = $addressObj->getUserAddresses($user_id);
             }
 
             document.getElementById("fullName").value = "";
-            document.getElementById("city").value = "";
             document.getElementById("country").value = "";
+            document.getElementById("city").value = "";
             document.getElementById("phone").value = "";
         }
 
@@ -1225,31 +644,54 @@ $addresses = $addressObj->getUserAddresses($user_id);
 
         function saveAddress() {
 
-            let name = document.getElementById("fullName").value;
-            let city = document.getElementById("city").value;
-            let country = document.getElementById("country").value;
-            let phone = document.getElementById("phone").value;
+            let formData = new FormData();
+            formData.append("full_name", document.getElementById("fullName").value);
+            formData.append("city", document.getElementById("city").value);
+            formData.append("country", document.getElementById("country").value);
+            formData.append("phone", document.getElementById("phone").value);
+            formData.append("area", "");
+            formData.append("street", "");
+            formData.append("postal_code", "");
 
-            if (!name || !city || !country || !phone) {
-                alert("Please fill all fields!");
-                return;
-            }
+            fetch("../php/add_address.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => res.text())
+                .then(data => {
 
-            let formattedAddress =
-                name + "<br>" +
-                city + ", " + country + "<br>" +
-                phone;
+                    if (data.trim() === "success") {
 
-            if (currentType === "billing") {
-                document.getElementById("billingAddress").innerHTML = formattedAddress;
-            } else {
-                document.getElementById("shippingAddress").innerHTML = formattedAddress;
-            }
+                        closeAddressModal();
 
-            closeAddressModal();
-            alert("Address saved successfully!");
+                        const grid = document.querySelector(".address-grid");
+
+                        let newCard = document.createElement("div");
+                        newCard.className = "address-card";
+
+                        newCard.innerHTML = `
+        <div class="address-header">
+            <i class="fa-solid fa-location-dot"></i>
+            <h3>Address</h3>
+        </div>
+
+        <div class="address-body">
+            ${document.getElementById("fullName").value}<br>
+            ${document.getElementById("city").value} - ${document.getElementById("country").value}<br>
+            ${document.getElementById("phone").value}
+        </div>
+
+        <button class="address-btn">Make Default</button>
+        <button class="address-btn" style="background:#444">Delete</button>
+    `;
+
+                        grid.appendChild(newCard);
+
+                        alert("Address Saved Successfully !");
+                    }
+
+                });
         }
-
 
         // إغلاق بالضغط خارج البوب اب
         let addressModal = document.getElementById("addressModal");
@@ -1258,6 +700,42 @@ $addresses = $addressObj->getUserAddresses($user_id);
                 closeAddressModal();
             }
         });
+
+        function setDefault(id) {
+            fetch("../php/set_default.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "id=" + id
+                })
+                .then(r => r.text())
+                .then(d => {
+                    if (d === "success") {
+                        alert("Default Address Updated");
+                        location.reload();
+                    }
+                });
+        }
+
+        function deleteAddress(id) {
+            if (!confirm("Delete this address?")) return;
+
+            fetch("../php/delete_address.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "id=" + id
+                })
+                .then(r => r.text())
+                .then(d => {
+                    if (d === "success") {
+                        alert("Address Deleted");
+                        location.reload();
+                    }
+                });
+        }
     </script>
 
 </body>
