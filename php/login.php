@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once "../includes/guest_only.php";
 require_once "../config/database.php";
 require_once "../classes/user.php";
+
 $db = (new Database())->connecte();
 $user = new Users($db);
 
@@ -13,6 +13,7 @@ if (empty($phone) || empty($password)) {
     die("<p style='color:red;'>الرجاء تعبئة جميع الحقول</p>");
 }
 
+// تنظيف رقم الهاتف
 $phone_clean = preg_replace('/[^0-9]/', '', $phone);
 
 if (strlen($phone_clean) === 9 && $phone_clean[0] === '7') {
@@ -27,6 +28,7 @@ if (strlen($phone_clean) === 9 && $phone_clean[0] === '7') {
     die("<p style='color:red;'>رقم الهاتف غير صالح</p>");
 }
 
+// جلب المستخدم من قاعدة البيانات
 $stmt = $db->prepare("SELECT * FROM users WHERE phone_number = :phone LIMIT 1");
 $stmt->bindParam(":phone", $phone_final);
 $stmt->execute();
@@ -37,18 +39,23 @@ if ($stmt->rowCount() === 0) {
 
 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// التحقق من كلمة المرور
 if (!password_verify($password, $data['password'])) {
     die("<p style='color:red;'>كلمة المرور خاطئة</p>");
 }
 
+// إنشاء session
 session_regenerate_id(true);
 $_SESSION['user_id'] = $data['id'];
 $_SESSION['user_name'] = $data['name'];
-$_SESSION['role'] = $data['role'] ?? 'user';
+$_SESSION['role'] = trim($data['role'] ?? 'user'); // إزالة أي مسافات
 
-if ($_SESSION['role'] === 'admin') {
+// تحويل المستخدم حسب نوعه
+if (strcasecmp($_SESSION['role'], 'admin') === 0) {
     header('Location: ../admin/html/dashbord.php');
+    exit;
 } else {
     header('Location: ../html/index.php');
+    exit;
+    
 }
-exit;

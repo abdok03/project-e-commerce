@@ -50,8 +50,38 @@
                     <th></th>
                 </tr>
             </thead>
+            <?php if(empty($cart_items)): ?>
+<tr>
+    <td colspan="5">No products in cart.</td>
+</tr>
+<?php else: ?>
+    <?php foreach($cart_items as $item): 
+        $itemTotal = $item['price'] * $item['quantity'];
+    ?>
+    <tr>
+        <td>
+            <img src="../<?= $item['image_url'] ?>" alt="<?= htmlspecialchars($item['name']) ?>">
+            <p><?= htmlspecialchars($item['name']) ?></p>
+        </td>
+        <td><?= $item['price'] ?> SAR</td>
+        <td>
+            <form method="POST" action="update_cart.php">
+                <input type="hidden" name="cart_item_id" value="<?= $item['cart_item_id'] ?>">
+                <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1">
+                <button type="submit">Update</button>
+            </form>
+        </td>
+        <td><?= $itemTotal ?> SAR</td>
+        <td>
+            <form method="POST" action="remove_from_cart.php">
+                <input type="hidden" name="cart_item_id" value="<?= $item['cart_item_id'] ?>">
+                <button type="submit">✖</button>
+            </form>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+<?php endif; ?>
 
-            <tbody id="cartPageItems">
                 
             </tbody>
         </table>
