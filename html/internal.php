@@ -1,3 +1,91 @@
+<?php
+include "../config/database.php";
+
+$db = (new Database())->connecte();
+
+// أولاً عرّفي الكاتيجوري
+$category = $_GET['category'] ?? null;
+
+// عدد كل المنتجات الداخلية
+if($category){
+    $countQuery = $db->prepare("
+        SELECT COUNT(*) FROM car_products
+        WHERE main_type='internal' AND category_slug = :cat
+    ");
+    $countQuery->bindParam(":cat", $category);
+} else {
+    $countQuery = $db->prepare("
+        SELECT COUNT(*) FROM car_products
+        WHERE main_type='internal'
+    ");
+}
+
+$countQuery->execute();
+$total = $countQuery->fetchColumn();
+
+
+$category = $_GET['category'] ?? null;
+
+// ================= COUNT =================
+if($category == "internal"){
+    $countQuery = $db->prepare("
+        SELECT COUNT(*) FROM car_products
+        WHERE main_type='internal'
+    ");
+}
+elseif($category){
+    $countQuery = $db->prepare("
+        SELECT COUNT(*) FROM car_products
+        WHERE main_type='internal' AND category_slug = :cat
+    ");
+    $countQuery->bindParam(":cat", $category);
+}
+else{
+    $countQuery = $db->prepare("
+        SELECT COUNT(*) FROM car_products
+        WHERE main_type='internal'
+    ");
+}
+
+$countQuery->execute();
+$total = $countQuery->fetchColumn();
+
+// ================= PRODUCTS =================
+if($category == "internal"){
+    $productQuery = $db->prepare("
+        SELECT * FROM car_products
+        WHERE main_type='internal'
+        ORDER BY popularity DESC
+    ");
+}
+elseif($category){
+    $productQuery = $db->prepare("
+        SELECT * FROM car_products
+        WHERE main_type='internal'
+        AND category_slug=:cat
+        ORDER BY popularity DESC
+    ");
+    $productQuery->bindParam(":cat", $category);
+}
+else{
+    $productQuery = $db->prepare("
+        SELECT * FROM car_products
+        WHERE main_type='internal'
+        ORDER BY popularity DESC
+        LIMIT 5
+    ");
+}
+
+$productQuery->execute();
+$products = $productQuery->fetchAll(PDO::FETCH_ASSOC);
+
+
+$productQuery->execute();
+$products = $productQuery->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -23,13 +111,13 @@
             <i class="fa fa-shopping-cart" id="cartIcon"></i>
         </div>
     </nav>
-    
-        <ul class="menu">
-    <li><a href="index.html">Home</a></li>
-    <li class="active"><a href="internal.html">Internal</a></li>
-    <li><a href="external.html">External</a></li>
-    <li><a href="Variousproducts.html">Various products</a></li>
-</ul>
+
+    <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li class="active"><a href="internal.html">Internal</a></li>
+        <li><a href="external.html">External</a></li>
+        <li><a href="Variousproducts.html">Various products</a></li>
+    </ul>
 
     <!-- قسم Hero لصفحة Interior -->
     <section class="hero interior-hero">
@@ -43,54 +131,56 @@
         <div class="section-title">
             <h2>Internal Components</h2>
             <div class="title-line"></div>
-            <p>Explore our premium collection of internal car accessories. High quality, perfect fit, and professional installation.</p>
+            <p>Explore our premium collection of internal car accessories. High quality, perfect fit, and professional
+                installation.</p>
         </div>
         <div class="brands-container">
             <div class="brands-scroll">
                 <div class="brands-row">
-                    <a href="product-category.html?category=interior-center" style="text-decoration: none; color: inherit;"></a>
-                    <div class="brand" onclick="window.location.href='product-category.html?category=interior-center'">
+                    <a href="product-category.php?category=interior-center"
+                        style="text-decoration: none; color: inherit;"></a>
+                    <div class="brand" onclick="window.location.href='product-category.php?category=interior-center'">
                         <div class="brand-image">
                             <img src="../assets/وسط-داخلي-150x150.png" alt="Interior Center">
                         </div>
                         <div class="brand-name">Interior Center</div>
                     </div>
-                    
+
                     <div class="brand">
                         <div class="brand-image">
                             <img src="../assets/تنسيق-داخلي-150x150.png" alt="Interior design">
                         </div>
                         <div class="brand-name">Interior Design</div>
                     </div>
-                    
+
                     <div class="brand">
                         <div class="brand-image">
                             <img src="../assets/أبواب-300x300.png" alt="Door">
                         </div>
                         <div class="brand-name">Door</div>
                     </div>
-                    
+
                     <div class="brand">
                         <div class="brand-image">
                             <img src="../assets/أرضيات-150x150.png" alt="Floors">
                         </div>
                         <div class="brand-name">Floors</div>
                     </div>
-                    
+
                     <div class="brand">
                         <div class="brand-image">
                             <img src="../assets/شعارات-وسبائك-300x300.png" alt="Logos and alloys">
                         </div>
                         <div class="brand-name">Logos & Alloys</div>
                     </div>
-                    
+
                     <div class="brand">
                         <div class="brand-image">
                             <img src="../assets/طبلون-1-300x300.png" alt="Dashboard">
                         </div>
                         <div class="brand-name">Dashboard</div>
                     </div>
-                    
+
                     <div class="brand">
                         <div class="brand-image">
                             <img src="../assets/طارة-300x300.png" alt="Hoop">
@@ -106,20 +196,30 @@
     <section class="products-page">
         <div class="page-header">
             <h2 class="page-title">Premium Car Accessories</h2>
-            <p class="page-subtitle">Discover our exclusive collection of high-quality internal car accessories designed for luxury and performance vehicles.</p>
+            <p class="page-subtitle">Discover our exclusive collection of high-quality internal car accessories designed
+                for luxury and performance vehicles.</p>
         </div>
-        
+
         <div class="products-controls">
-            <div class="results-count">Showing 5 of 1780 products</div>
+            <div class="results-count">
+                Showing
+                <?= $total ?> Products
+            </div>
+
             <div class="products-filters">
-                <select class="filter-select">
-                    <option>Filter by Category</option>
-                    <option>Interior Center</option>
-                    <option>Dashboard</option>
-                    <option>Buttons</option>
-                    <option>Displays</option>
-                </select>
-                
+                <form method="GET">
+                    <?php $selectedCategory = $_GET['category'] ?? ''; ?>
+                    <select  id="categoryFilter" name="category" class="filter-select" onchange="this.form.submit()">
+                        <option value="">Filter by Category</option>
+                        <option value="internal">Internal</option>
+                        <option value="interior center">Interior Center</option>
+                        <option value="dashboard">Dashboard</option>
+                        <option value="buttons">Buttons</option>
+                        <option value="displays">Displays</option>
+                    </select>
+                </form>
+
+
                 <select class="sort-select">
                     <option>Sort by: Default</option>
                     <option>Sort by: Price Low to High</option>
@@ -129,114 +229,61 @@
                 </select>
             </div>
         </div>
-        
+
         <div class="products-grid">
-            <!-- المنتج 1 -->
-            <div class="product-card">
-                <div class="product-badge">Best Seller</div>
-                <div class="product-image">
-                    <img src="../imgproducts/Mercedes glass buttons.webp" alt="Mercedes glass buttons">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Mercedes glass buttons (1 piece)</h3>
-                    
-                    <div class="product-price">
-                        <span class="price-label">Price includes tax</span>
-                        <span class="price-value">48 SAR</span>
+
+            <?php if (empty($products)): ?>
+
+                <h2 style="width:100%; text-align:center; color:red;">
+                    No Products Found
+                </h2>
+
+            <?php else: ?>
+
+                <?php foreach ($products as $p): ?>
+
+                    <div class="product-card">
+
+                        <?php if (!empty($p['badge'])): ?>
+                            <div class="product-badge">
+                                <?= htmlspecialchars($p['badge']) ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="product-image">
+                            <img src="../uploads/<?= $p['image'] ?>" alt="">
+                        </div>
+
+                        <div class="product-content">
+
+                            <h3 class="product-title">
+                                <?= htmlspecialchars($p['name']) ?>
+                            </h3>
+
+                            <div class="product-price">
+                                <span class="price-label">Price includes tax</span>
+                                <span class="price-value"><?= $p['price'] ?> SAR</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="favorite-btn">♡</button>
+
+                                <a href="../php/product.php?id=<?= $p['id'] ?>"
+                                    class="action-button">
+                                    View Product
+                                </a>
+                            </div>
+
+                        </div>
+
                     </div>
-                    
-                    <div class="card-actions">
-                        <button class="favorite-btn">♡</button>
-                        <button class="action-button">Select One Of The Options</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المنتج 2 -->
-            <div class="product-card">
-                <div class="product-badge">New</div>
-                <div class="product-image">
-                    <img src="../imgproducts/BMW AUTO AC Buttons.webp" alt="BMW AUTO AC Buttons">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">BMW AUTO AC Buttons for 5, 6, 7, X6, and X5 Series (2 pieces)</h3>
-                    
-                    <div class="product-price">
-                        <span class="price-label">Price includes tax</span>
-                        <span class="price-value">91 SAR</span>
-                    </div>
-                    
-                    <div class="card-actions">
-                        <button class="favorite-btn">♡</button>
-                        <button class="action-button">Select One Of The Options</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المنتج 3 -->
-            <div class="product-card">
-                <div class="product-badge">Premium</div>
-                <div class="product-image">
-                    <img src="../imgproducts/LDC BMW.webp" alt="LCD BMW instrument cluster display">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">LCD BMW instrument cluster display for 5 Series – 6 Series – 7 Series – X3 Series – X4</h3>
-                    
-                    <div class="product-price">
-                        <span class="price-label">Price includes tax</span>
-                        <span class="price-value">2,145 SAR</span>
-                    </div>
-                    
-                    <div class="card-actions">
-                        <button class="favorite-btn">♡</button>
-                        <button class="action-button add-to-cart">ADD TO CART</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المنتج 4 -->
-            <div class="product-card">
-                <div class="product-badge">Featured</div>
-                <div class="product-image">
-                    <img src="../imgproducts/LDC BMW 3-4.webp" alt="LCD BMW 3-4 Series Instrument Cluster">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">LCD BMW 3-4 Series Instrument Cluster Display (12.3 inches)</h3>
-                    
-                    <div class="product-price">
-                        <span class="price-label">Price includes tax</span>
-                        <span class="price-value">3,360 SAR</span>
-                    </div>
-                    
-                    <div class="card-actions">
-                        <button class="favorite-btn">♡</button>
-                        <button class="action-button add-to-cart">ADD TO CART</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المنتج 5 -->
-            <div class="product-card">
-                <div class="product-badge">Hot</div>
-                <div class="product-image">
-                    <img src="../imgproducts/Porsche Panamera – Cayenne – Macan glass.webp" alt="Porsche glass buttons">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Porsche Panamera – Cayenne – Macan glass buttons set</h3>
-                    
-                    <div class="product-price">
-                        <span class="price-label">Price includes tax</span>
-                        <span class="price-value">91 SAR</span>
-                    </div>
-                    
-                    <div class="card-actions">
-                        <button class="favorite-btn">♡</button>
-                        <button class="action-button add-to-cart">ADD TO CART</button>
-                    </div>
-                </div>
-            </div>
+
+                <?php endforeach; ?>
+
+            <?php endif; ?>
+
         </div>
-        
+
         <!-- الترقيم الصفحات -->
         <div class="pagination">
             <button class="page-btn prev">← Previous</button>
@@ -325,141 +372,140 @@
 
 
     <!-- Popup Login -->
-<!-- Overlay Background -->
-<div class="popup-overlay" id="popup">
-    <div class="popup-box">
+    <!-- Overlay Background -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup-box">
 
-        <img src="../assets/logo.png" class="popup-logo">
+            <img src="../assets/logo.png" class="popup-logo">
 
-        <div class="popup-title">Mobile number</div>
+            <div class="popup-title">Mobile number</div>
 
-        <div class="popup-input">
-            <span>+962</span>
-            <input type="text" placeholder="Enter mobile number">
-        </div>
+            <div class="popup-input">
+                <span>+962</span>
+                <input type="text" placeholder="Enter mobile number">
+            </div>
 
-        <button class="popup-btn" onclick="openPasswordPopup()">
-            Login with Password
-        </button>
+            <button class="popup-btn" onclick="openPasswordPopup()">
+                Login with Password
+            </button>
 
-    </div>
-</div>
-
-<!-- Password Popup -->
-<div class="popup-overlay" id="passwordPopup" style="display:none;">
-    <div class="popup-box">
-
-        <img src="../assets/logo.png" class="popup-logo">
-
-        <h3 id="welcomeText">Welcome back, User</h3>
-
-        <div class="popup-title">Enter Password</div>
-
-        <div class="popup-input">
-            <input type="password" placeholder="Enter your password">
-        </div>
-
-        <button class="popup-btn">
-            Login
-        </button>
-
-    </div>
-</div>
-
-<!-- Cart Overlay -->
-<div id="cartOverlay" class="cart-overlay"></div>
-
-<!-- Cart Sidebar -->
-<div id="cartSidebar" class="cart-sidebar">
-
-    <div class="cart-header">
-        <button id="cartCloseBtn" class="cart-close">
-            <i class="fa fa-times"></i>
-            <span>CLOSING</span>
-        </button>
-
-        <span class="cart-title">SHOPPING CART</span>
-    </div>
-
-    <div id="cartItems" class="cart-items">
-        <!-- JS will inject items here -->
-        <p class="empty-cart">No products in the cart.</p>
-    </div>
-
-    <div class="cart-footer">
-        <div class="cart-total">
-            <span>Total (Including VAT)</span>
-            <span id="cartTotal">0 SAR</span>
-        </div>
-
-        <div class="cart-footer-buttons">
-            <button class="cart-btn primary" onclick="window.location.href='checkout.html'">Complete the order</button>
-            <button  class="cart-btn secondary" onclick="window.location.href='cart.html'">Basket display</button>
         </div>
     </div>
 
-</div>
+    <!-- Password Popup -->
+    <div class="popup-overlay" id="passwordPopup" style="display:none;">
+        <div class="popup-box">
+
+            <img src="../assets/logo.png" class="popup-logo">
+
+            <h3 id="welcomeText">Welcome back, User</h3>
+
+            <div class="popup-title">Enter Password</div>
+
+            <div class="popup-input">
+                <input type="password" placeholder="Enter your password">
+            </div>
+
+            <button class="popup-btn">
+                Login
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+
+        <div class="cart-header">
+            <button id="cartCloseBtn" class="cart-close">
+                <i class="fa fa-times"></i>
+                <span>CLOSING</span>
+            </button>
+
+            <span class="cart-title">SHOPPING CART</span>
+        </div>
+
+        <div id="cartItems" class="cart-items">
+            <!-- JS will inject items here -->
+            <p class="empty-cart">No products in the cart.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total (Including VAT)</span>
+                <span id="cartTotal">0 SAR</span>
+            </div>
+
+            <div class="cart-footer-buttons">
+                <button class="cart-btn primary" onclick="window.location.href='checkout.html'">Complete the
+                    order</button>
+                <button class="cart-btn secondary" onclick="window.location.href='cart.html'">Basket display</button>
+            </div>
+        </div>
+
+    </div>
 
 
 
-<script>
-    document.querySelectorAll('.brand').forEach(brand => {
-    brand.addEventListener('click', function() {
-        const categoryName = this.querySelector('.brand-name').textContent;
-        window.location.href = `product-category.html?category=${encodeURIComponent(categoryName.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-'))}`;
-    });
-});
+    <script>
+        document.querySelectorAll('.brand').forEach(brand => {
+            brand.addEventListener('click', function() {
+                const categoryName = this.querySelector('.brand-name').textContent;
+                window.location.href = `product-category.php?category=${encodeURIComponent(categoryName.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-'))}`;
+            });
+        });
 
 
-function openPopup(){
-    document.getElementById("popup").style.display = "flex";
-}
+        function openPopup() {
+            document.getElementById("popup").style.display = "flex";
+        }
 
-function closePopup(){
-    document.getElementById("popup").style.display = "none";
-}
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
 
-function openPasswordPopup(){
+        function openPasswordPopup() {
 
-    let userName = "Ruba";
+            let userName = "Ruba";
 
-    document.getElementById("welcomeText").innerText =
-        "Welcome back, " + userName;
+            document.getElementById("welcomeText").innerText =
+                "Welcome back, " + userName;
 
-    document.getElementById("popup").style.display = "none";
-    document.getElementById("passwordPopup").style.display = "flex";
-}
-
-
-// Popup 1 -------------
-const popupOverlay1 = document.getElementById("popup");
-const popupBox1 = popupOverlay1.querySelector(".popup-box");
-
-popupOverlay1.addEventListener("click", function(){
-    popupOverlay1.style.display = "none";
-});
-
-popupBox1.addEventListener("click", function(e){
-    e.stopPropagation();
-});
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("passwordPopup").style.display = "flex";
+        }
 
 
-// Popup 2 -------------
-const popupOverlay2 = document.getElementById("passwordPopup");
-const popupBox2 = popupOverlay2.querySelector(".popup-box");
+        // Popup 1 -------------
+        const popupOverlay1 = document.getElementById("popup");
+        const popupBox1 = popupOverlay1.querySelector(".popup-box");
 
-popupOverlay2.addEventListener("click", function(){
-    popupOverlay2.style.display = "none";
-});
+        popupOverlay1.addEventListener("click", function() {
+            popupOverlay1.style.display = "none";
+        });
 
-popupBox2.addEventListener("click", function(e){
-    e.stopPropagation();
-});
+        popupBox1.addEventListener("click", function(e) {
+            e.stopPropagation();
+        });
 
-</script>
 
- <script>
+        // Popup 2 -------------
+        const popupOverlay2 = document.getElementById("passwordPopup");
+        const popupBox2 = popupOverlay2.querySelector(".popup-box");
 
+        popupOverlay2.addEventListener("click", function() {
+            popupOverlay2.style.display = "none";
+        });
+
+        popupBox2.addEventListener("click", function(e) {
+            e.stopPropagation();
+        });
+    </script>
+
+    <script>
         const cartSidebar = document.getElementById('cartSidebar');
         const cartOverlay = document.getElementById('cartOverlay');
         const cartCloseBtn = document.getElementById('cartCloseBtn');
@@ -524,7 +570,10 @@ popupBox2.addEventListener("click", function(e){
             if (existing) {
                 existing.qty += 1;
             } else {
-                cart.push({ ...product, qty: 1 });
+                cart.push({
+                    ...product,
+                    qty: 1
+                });
             }
 
             renderCart();
@@ -544,7 +593,7 @@ popupBox2.addEventListener("click", function(e){
 
         // ربط أزرار Add to cart
         document.querySelectorAll('.add-to-cart').forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
                 const product = {
                     name: this.dataset.name,
                     price: parseFloat(this.dataset.price),
@@ -557,7 +606,7 @@ popupBox2.addEventListener("click", function(e){
 
         document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
 
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
 
                 const product = {
                     name: this.dataset.name,
@@ -565,12 +614,43 @@ popupBox2.addEventListener("click", function(e){
                     image: this.dataset.image
                 };
 
-                addToCart(product);  
+                addToCart(product);
             });
 
         });
-
     </script>
+    <script>
+function filterCategory(val){
+    if(val === "internal"){
+        window.location.href = "internal.php?category=internal";
+    }else if(val){
+        window.location.href = "internal.php?category=" + val;
+    }else{
+        window.location.href = "internal.php";
+    }
+}
 </script>
+
+<script>
+
+    const params = new URLSearchParams(window.location.search);
+const cat = params.get('category');
+
+if(cat){
+    document.getElementById("categoryFilter").value = cat;
+}
+
+document.getElementById("categoryFilter").addEventListener("change", function () {
+    const value = this.value;
+    if(value !== "") {
+        window.location.href = "internal.php?category=" + value;
+    } else {
+        window.location.href = "internal.php";
+    }
+});
+</script>
+
+
 </body>
+
 </html>

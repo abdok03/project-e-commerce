@@ -1,3 +1,26 @@
+<?php
+include "../config/database.php";
+
+$db = (new Database())->connecte();
+
+$category = $_GET['category'] ?? '';
+
+$query = $db->prepare("SELECT * FROM car_products 
+                       WHERE main_type = 'internal' 
+                       AND category_slug = ?");
+$query->execute([$category]);
+
+$products = $query->fetchAll(PDO::FETCH_ASSOC);
+
+// total count
+$countQuery = $db->prepare("SELECT COUNT(*) FROM car_products 
+                            WHERE main_type='internal' 
+                            AND category_slug=?");
+$countQuery->execute([$category]);
+$total = $countQuery->fetchColumn();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -8,6 +31,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="icon" type="image/x-icon" href="../assets/icon.png">
+    <link rel="stylesheet" href="../css/external.css">
+    <link rel="stylesheet" href="../css/internal.css">
 </head>
 
 <body>
@@ -49,6 +74,8 @@
     </div>
 </section>
 
+<div class="category-layout">
+
 <aside class="filter-sidebar">
 
     <h3>Filter parts by car</h3>
@@ -69,6 +96,72 @@
     <button class="filter-btn">research</button>
 
 </aside>
+
+
+<div class="products-area">
+
+    <div class="results-count">
+        Showing <?= count($products) ?> of <?= $total ?> products
+    </div>
+
+    <div class="products-grid">
+
+<?php if(empty($products)): ?>
+
+<h2 style="text-align:center;color:red;width:100%;">
+    No Products Found
+</h2>
+
+<?php else: ?>
+
+<?php foreach($products as $p): ?>
+    
+<div class="product-card">
+
+    <?php if(!empty($p['badge'])): ?>
+    <div class="product-badge">
+        <?= htmlspecialchars($p['badge']) ?>
+    </div>
+    <?php endif; ?>
+
+    <div class="product-image">
+        <img src="../uploads/<?= $p['image'] ?>" alt="">
+    </div>
+
+    <div class="product-content">
+
+        <h3 class="product-title">
+            <?= htmlspecialchars($p['name']) ?>
+        </h3>
+
+        <div class="product-price">
+            <span class="price-label">Price includes tax</span>
+            <span class="price-value"><?= $p['price'] ?> SAR</span>
+        </div>
+
+        <div class="card-actions">
+            <button class="favorite-btn">♡</button>
+
+            <a href="single_product.php?id=<?= $p['id'] ?>" 
+               class="action-button">
+               View Details
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<?php endforeach; ?>
+<?php endif; ?>
+</div>
+
+</div>
+
+</div>
+
+
+
 
 
 

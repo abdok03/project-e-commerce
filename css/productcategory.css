@@ -548,3 +548,32 @@ body{
     background: #ccc;
     border-radius: 3px;
 }
+
+
+
+
+.category-layout{
+    display: flex;
+    gap: 25px;
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+/* sidebar ثابت */
+.filter-sidebar{
+    width: 260px;
+    flex-shrink: 0;
+}
+
+/* المنتجات تاخذ باقي العرض */
+.products-area{
+    flex: 1;
+}
+
+/* شبكة المنتجات */
+.products-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+    gap: 25px;
+}
