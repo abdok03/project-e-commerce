@@ -4,7 +4,7 @@ session_start();
 require_once "../config/database.php";
 
 if (!isset($_SESSION['user_id'])) {
-    
+
     die("غير مسموح");
 }
 
@@ -32,6 +32,6 @@ $product_id = (int) $_POST['product_id'];
 $stmt = $db->prepare("INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, 1)");
 $stmt->execute([$cart_id, $product_id]);
 
-header("Location: cart.php");
+header("Location: carts.php");
 exit;
 ?>

@@ -68,7 +68,9 @@ $categories = $db->query("SELECT * FROM categories")->fetchAll(PDO::FETCH_ASSOC)
 
 <head>
     <meta charset="UTF-8">
-    <title>إضافة منتج | CarStore</title>
+    <title> منتج | CarStore</title>
+    <link rel="stylesheet" href="../css/dashborad.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../css/dashboard.css">
     <style>
         body {
@@ -81,7 +83,7 @@ $categories = $db->query("SELECT * FROM categories")->fetchAll(PDO::FETCH_ASSOC)
             display: flex;
             min-height: 100vh;
         }
-
+/* 
         .sidebar {
             width: 250px;
             background: #111;
@@ -116,7 +118,7 @@ $categories = $db->query("SELECT * FROM categories")->fetchAll(PDO::FETCH_ASSOC)
 
         .sidebar ul li a:hover {
             background: #444;
-        }
+        } */
 
         .content {
             flex: 1;
@@ -191,14 +193,18 @@ $categories = $db->query("SELECT * FROM categories")->fetchAll(PDO::FETCH_ASSOC)
         <aside class="sidebar" id="sidebar">
             <h2>🚗 CarStore</h2>
             <ul>
-                <li><a href="dashboard.php"><i class="fa fa-home"></i> <span>لوحة التحكم</span></a></li>
-                <li><a href="products.php"><i class="fa fa-box"></i> <span>المنتجات</span></a></li>
-                <li><a href="categories.php"><i class="fa fa-tags"></i> <span>الأقسام</span></a></li>
+                <li><a href="dashboard.php"><i class="fa fa-home"></i> dashbord</a></li>
+                <li><a href="../php/products.php"><i class="fa fa-box"></i> Products</a></li>
+                <li><a href="../php/create_product.php"><i class="fa fa-tags"></i> Add product</a></li>
+                <li><a href="orders.php"><i class="fa fa-shopping-cart"></i> Orders</a></li>
+                <li><a href="users.php"><i class="fa fa-users"></i> Users</a></li>
+                <li><a href="reports.php"><i class="fa fa-chart-line"></i> Reports</a></li>
+                <li><a href="logout.php" class="logout"><i class="fa fa-sign-out"></i> logout</a></li>
             </ul>
         </aside>
 
         <main class="content">
-            <h1>إضافة منتج جديد</h1>
+            <h1>Add a new product</h1>
 
             <form action="" method="POST" enctype="multipart/form-data" class="product-form">
                 <label> name:</label>
@@ -233,13 +239,12 @@ $categories = $db->query("SELECT * FROM categories")->fetchAll(PDO::FETCH_ASSOC)
                 <label>image:</label>
                 <input type="file" name="image" accept="image/*">
 
-                <button type="submit">إضافة المنتج</button>
+                <button type="submit">Add product</button>
             </form>
         </main>
     </div>
 
     <script>
-        // Sidebar toggle
         const sidebar = document.getElementById('sidebar');
         const toggleBtn = document.createElement('div');
         toggleBtn.classList.add('toggle-btn');

@@ -240,7 +240,6 @@ function filterProducts($products, $category_id)
                     <p><?= htmlspecialchars($product['car_brand'] . ' ' . $product['car_model']) ?></p>
                     <span class="price"><?= htmlspecialchars($product['price']) ?> Jd</span>
 
-                    <!-- form POST إلى add_to_cart.php -->
                     <form method="POST" action="../php/add_to_cart.php">
                         <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
                         <input type="number" name="quantity" value="1" min="1">
@@ -305,7 +304,7 @@ function filterProducts($products, $category_id)
                         <button class="select-options-btn">Select One Of The Options</button>
                     </div>
                     <form method="POST" action="../php/add_to_cart.php">
-                        <input type="hidden" name="product_id" value="<?= $diff['id'] ?>">
+                        <input type="hidden" name="product_id" value="<?= $product['id']?>">
                         <input type="number" name="quantity" value="1" min="1">
                         <button type="submit" class="add-to-cart-btn">Add to Cart</button>
                     </form>

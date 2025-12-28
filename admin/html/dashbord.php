@@ -31,13 +31,13 @@ $totalSales    = $totalSales ?? 0;
     <aside class="sidebar">
         <h2>🚗 CarStore</h2>
         <ul>
-            <li><a href="../php/dashboard.php"><i class="fa fa-home"></i> لوحة التحكم</a></li>
-            <li><a href="../php/products.php"><i class="fa fa-box"></i> المنتجات</a></li>
-            <li><a href="../php/create_product.php"><i class="fa fa-tags"></i> اضافة منتج</a></li>
-            <li><a href="orders.php"><i class="fa fa-shopping-cart"></i> الطلبات</a></li>
-            <li><a href="users.php"><i class="fa fa-users"></i> المستخدمين</a></li>
-            <li><a href="reports.php"><i class="fa fa-chart-line"></i> التقارير</a></li>
-            <li><a href="../php/logout.php" class="logout"><i class="fa fa-sign-out"></i> خروج</a></li>
+            <li><a href="../php/dashboard.php"><i class="fa fa-home"></i>dashbord</a></li>
+            <li><a href="../php/products.php"><i class="fa fa-box"></i> Products</a></li>
+            <li><a href="../php/create_product.php"><i class="fa fa-tags"></i>  Add product</a></li>
+            <li><a href="orders.php"><i class="fa fa-shopping-cart"></i> Orders</a></li>
+            <li><a href="users.php"><i class="fa fa-users"></i> Users</a></li>
+            <li><a href="reports.php"><i class="fa fa-chart-line"></i> Reports</a></li>
+            <li><a href="../php/logout.php" class="logout"><i class="fa fa-sign-out"></i> logout</a></li>
         </ul>
     </aside>
 

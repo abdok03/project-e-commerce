@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $qty = 1;
         $stmt = $db->prepare("UPDATE cart_items SET quantity = :qty WHERE id = :id");
         $stmt->execute([':qty' => $qty, ':id' => $item_id]);
-        header('Location: cart.php');
+        header('Location: carts.php');
         exit;
     }
 
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $item_id = intval($_POST['item_id']);
         $stmt = $db->prepare("DELETE FROM cart_items WHERE id = :id");
         $stmt->execute([':id' => $item_id]);
-        header('Location: cart.php');
+        header('Location: carts.php');
         exit;
     }
 }
