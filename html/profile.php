@@ -57,13 +57,12 @@ $addresses = $addressObj->getUserAddresses($user_id);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="icon" type="image/x-icon" href="../assets/icon.png">
     <link rel="stylesheet" href="../css/external.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <link rel="stylesheet" href="../css/profile.css">
 </head>
 <style>
-    
+
 </style>
 
 <body>
@@ -81,7 +80,7 @@ $addresses = $addressObj->getUserAddresses($user_id);
     </nav>
 
     <ul class="menu">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li><a href="internal.html">Internal</a></li>
         <li><a href="external.html">External</a></li>
         <li><a href="Variousproducts.html">Various products</a></li>
@@ -334,7 +333,8 @@ $addresses = $addressObj->getUserAddresses($user_id);
             </div>
 
             <div class="cart-footer-buttons">
-                <button class="cart-btn primary" onclick="window.location.href='checkout.html'">Complete the order</button>
+                <button class="cart-btn primary" onclick="window.location.href='checkout.html'">Complete the
+                    order</button>
                 <button class="cart-btn secondary" onclick="window.location.href='cart.html'">Basket display</button>
             </div>
         </div>
@@ -423,7 +423,7 @@ $addresses = $addressObj->getUserAddresses($user_id);
 
         // ربط أزرار Add to cart
         document.querySelectorAll('.add-to-cart').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const product = {
                     name: this.dataset.name,
                     price: parseFloat(this.dataset.price),
@@ -436,7 +436,7 @@ $addresses = $addressObj->getUserAddresses($user_id);
 
         document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
 
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
 
                 const product = {
                     name: this.dataset.name,
@@ -454,12 +454,12 @@ $addresses = $addressObj->getUserAddresses($user_id);
         let menuItems = document.querySelectorAll(".account-sidebar li");
 
         menuItems.forEach(item => {
-            item.addEventListener("click", function() {
+            item.addEventListener("click", function () {
 
                 if (this.classList.contains('logout')) {
                     if (confirm('Are you sure you want to logout?')) {
                         alert('Logged out successfully!');
-                        window.location.href = "../php/logout.php";
+                        window.location.href = "index.php";
 
                     }
                     return;
@@ -520,7 +520,7 @@ $addresses = $addressObj->getUserAddresses($user_id);
 
         let modal = document.getElementById("editModal");
 
-        document.getElementById("editBtn").onclick = function() {
+        document.getElementById("editBtn").onclick = function () {
             modal.style.display = "flex";
 
 
@@ -539,7 +539,7 @@ $addresses = $addressObj->getUserAddresses($user_id);
         }
 
 
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
             if (e.target === modal) {
                 closeModal();
             }
@@ -551,12 +551,12 @@ $addresses = $addressObj->getUserAddresses($user_id);
             let phone = editPhone.value;
 
             fetch("../php/update_user.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: `name=${name}&email=${email}&phone=${phone}`
-                })
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `name=${name}&email=${email}&phone=${phone}`
+            })
                 .then(res => res.text())
                 .then(data => {
                     if (data === "success") {
@@ -570,7 +570,7 @@ $addresses = $addressObj->getUserAddresses($user_id);
         }
 
 
-        document.getElementById("deleteBtn").onclick = function() {
+        document.getElementById("deleteBtn").onclick = function () {
             if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
                 alert("Account deletion request sent. This is a demo message.");
 
@@ -613,7 +613,7 @@ $addresses = $addressObj->getUserAddresses($user_id);
 
         // Click outside to close
         let orderModal = document.getElementById("orderModal");
-        orderModal.addEventListener("click", function(e) {
+        orderModal.addEventListener("click", function (e) {
             if (e.target === orderModal) {
                 closeOrderModal();
             }
@@ -654,9 +654,9 @@ $addresses = $addressObj->getUserAddresses($user_id);
             formData.append("postal_code", "");
 
             fetch("../php/add_address.php", {
-                    method: "POST",
-                    body: formData
-                })
+                method: "POST",
+                body: formData
+            })
                 .then(res => res.text())
                 .then(data => {
 
@@ -695,7 +695,7 @@ $addresses = $addressObj->getUserAddresses($user_id);
 
         // إغلاق بالضغط خارج البوب اب
         let addressModal = document.getElementById("addressModal");
-        addressModal.addEventListener("click", function(e) {
+        addressModal.addEventListener("click", function (e) {
             if (e.target === addressModal) {
                 closeAddressModal();
             }
@@ -703,12 +703,12 @@ $addresses = $addressObj->getUserAddresses($user_id);
 
         function setDefault(id) {
             fetch("../php/set_default.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: "id=" + id
-                })
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "id=" + id
+            })
                 .then(r => r.text())
                 .then(d => {
                     if (d === "success") {
@@ -722,12 +722,12 @@ $addresses = $addressObj->getUserAddresses($user_id);
             if (!confirm("Delete this address?")) return;
 
             fetch("../php/delete_address.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: "id=" + id
-                })
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "id=" + id
+            })
                 .then(r => r.text())
                 .then(d => {
                     if (d === "success") {

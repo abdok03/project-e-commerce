@@ -29,7 +29,7 @@ $category = $_GET['category'] ?? null;
 // ================= COUNT =================
 if($category == "internal"){
     $countQuery = $db->prepare("
-        SELECT COUNT(*) FROM car_products
+        SELECT COUNT(*) FROM products
         WHERE main_type='internal'
     ");
 }

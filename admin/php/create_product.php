@@ -83,7 +83,8 @@ $categories = $db->query("SELECT * FROM categories")->fetchAll(PDO::FETCH_ASSOC)
             display: flex;
             min-height: 100vh;
         }
-/* 
+
+        /* 
         .sidebar {
             width: 250px;
             background: #111;
@@ -221,7 +222,7 @@ $categories = $db->query("SELECT * FROM categories")->fetchAll(PDO::FETCH_ASSOC)
 
                 <label>category:</label>
                 <select name="category_id" required>
-                    <option value="">اختر الفئة</option>
+                    <option value=""> Select category</option>
                     <?php foreach ($categories as $cat): ?>
                         <option value="<?= $cat['id'] ?>"><?= $cat['name'] ?></option>
                     <?php endforeach; ?>

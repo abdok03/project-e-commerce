@@ -30,7 +30,7 @@
     </nav>
 
     <ul class="menu">
-        <li><a href="../html/index.html">Home</a></li>
+        <li><a href="../html/index.php">Home</a></li>
         <li><a href="../html/internal.html">Internal</a></li>
         <li><a href="../html/external.html">External</a></li>
         <li><a href="../html/Variousproducts.html">Various products</a></li>
@@ -172,7 +172,7 @@
             <div>All Rights Reserved. <span>Enhancements</span> Copyright © 2025</div>
         </div>
     </footer>
-  <!-- Cart Overlay -->
+    <!-- Cart Overlay -->
     <div id="cartOverlay" class="cart-overlay"></div>
 
     <!-- Cart Sidebar -->
@@ -199,14 +199,16 @@
             </div>
 
             <div class="cart-footer-buttons">
-                <button class="cart-btn primary" onclick="window.location.href='../html/checkout.html'">Complete the order</button>
-                <button  class="cart-btn secondary" onclick="window.location.href='../html/cart.html'">Basket display</button>
+                <button class="cart-btn primary" onclick="window.location.href='../html/checkout.html'">Complete the
+                    order</button>
+                <button class="cart-btn secondary" onclick="window.location.href='../html/cart.html'">Basket
+                    display</button>
             </div>
         </div>
 
     </div>
 
-     <script>
+    <script>
 
         const cartSidebar = document.getElementById('cartSidebar');
         const cartOverlay = document.getElementById('cartOverlay');
@@ -313,7 +315,7 @@
                     image: this.dataset.image
                 };
 
-                addToCart(product);   
+                addToCart(product);
             });
 
         });

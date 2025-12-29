@@ -16,7 +16,7 @@ $stmt = $db->query("SELECT * FROM products ORDER BY id DESC");
 
 <head>
     <meta charset="UTF-8">
-    <title>المنتجات | CarStore</title>
+    <title>product | CarStore</title>
     <link rel="stylesheet" href="../css/dashborad.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -29,6 +29,13 @@ $stmt = $db->query("SELECT * FROM products ORDER BY id DESC");
         .dashboard {
             display: flex;
             min-height: 100vh;
+        }
+
+        .main-content {
+            margin-right: 240px;
+            /* بدل margin-left */
+            padding: 20px;
+            width: calc(100% - 240px);
         }
 
         /* .sidebar {
@@ -142,7 +149,6 @@ $stmt = $db->query("SELECT * FROM products ORDER BY id DESC");
 
     <div class="dashboard">
 
-        <!-- Sidebar -->
         <aside class="sidebar">
             <h2>🚗 CarStore</h2>
             <ul>
@@ -158,18 +164,18 @@ $stmt = $db->query("SELECT * FROM products ORDER BY id DESC");
 
         <main class="content">
             <header>
-                <h1>المنتجات</h1>
+                <h1>Products</h1>
             </header>
 
             <table>
                 <tr>
                     <th>ID</th>
-                    <th>الاسم</th>
-                    <th>الماركة</th>
-                    <th>السعر</th>
-                    <th>الكمية</th>
-                    <th>الصورة</th>
-                    <th>الإجراءات</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>price</th>
+                    <th>Quantity</th>
+                    <th>Img</th>
+                    <th>procedures</th>
                 </tr>
 
                 <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
@@ -182,16 +188,22 @@ $stmt = $db->query("SELECT * FROM products ORDER BY id DESC");
                         <td>
                             <?php
                             if (!empty($row['image_url'])) {
-                                $fullPath = __DIR__ . '/../../' . $row['image_url'];
-                                if (file_exists($fullPath)) {
-                                    echo '<img src="/car_e-c/project-e-commerce/' . $row['image_url'] . '" width="80">';
+
+                                $imgUrl = '/car_e-c/project-e-commerce/' . ltrim($row['image_url'], '/');
+
+                                $imgPath = $_SERVER['DOCUMENT_ROOT'] . $imgUrl;
+
+                                if (file_exists($imgPath)) {
+                                    echo '<img src="' . htmlspecialchars($imgUrl) . '" width="80">';
                                 } else {
-                                    echo 'الصورة غير موجودة على السيرفر: ' . htmlspecialchars($row['image_url']);
+                                    echo 'الصورة غير موجودة على السيرفر';
                                 }
+
                             } else {
                                 echo 'لا يوجد مسار للصورة';
                             }
                             ?>
+
                         </td>
 
 
@@ -200,10 +212,10 @@ $stmt = $db->query("SELECT * FROM products ORDER BY id DESC");
 
 
                         <td>
-                            <a href="edit_product.php?id=<?= $row['id'] ?>" class="btn btn-edit">تعديل</a>
+                            <a href="edit_product.php?id=<?= $row['id'] ?>" class="btn btn-edit">Edite</a>
                             <form action="delete_product.php" method="POST" style="display:inline;">
                                 <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                <button class="btn btn-delete">حذف</button>
+                                <button class="btn btn-delete">Delete</button>
                             </form>
                         </td>
                     </tr>

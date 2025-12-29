@@ -12,7 +12,6 @@ $query->execute([$category]);
 
 $products = $query->fetchAll(PDO::FETCH_ASSOC);
 
-// total count
 $countQuery = $db->prepare("SELECT COUNT(*) FROM car_products 
                             WHERE main_type='internal' 
                             AND category_slug=?");

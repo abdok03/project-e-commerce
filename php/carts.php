@@ -11,7 +11,6 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $db = (new Database())->connecte();
 
-// جلب كارت المستخدم
 $stmt = $db->prepare("SELECT id FROM carts WHERE user_id = :user_id LIMIT 1");
 $stmt->execute([':user_id' => $user_id]);
 $cart = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -33,7 +32,6 @@ if ($cart) {
 
 }
 
-// تحديث الكمية
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['update_qty'])) {
         $item_id = intval($_POST['item_id']);
@@ -46,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // حذف المنتج
     if (isset($_POST['remove_item'])) {
         $item_id = intval($_POST['item_id']);
         $stmt = $db->prepare("DELETE FROM cart_items WHERE id = :id");
@@ -77,8 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <i class="fa fa-heart"></i>
             <i class="fa fa-shopping-cart"></i>
         </div>
-    </nav>
 
+    </nav>
+    <ul class="menu">
+        <li><a href="../html/index.php">Home</a></li>
+        <li><a href="../html/internal.php">Internal</a></li>
+        <li><a href="../html/external.html">External</a></li>
+        <li><a href="../html/Variousproducts.html">Various products</a></li>
+    </ul>
     <div class="cart-container">
 
         <div class="cart-table">
@@ -133,7 +136,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="summary">
             <h3>TOTAL SHOPPING CART</h3>
             <p class="summary-total"><?= $grand_total ?? 0 ?> JD</p>
-            <button class="checkout-btn">Checkout</button>
+            <button onclick="window.location.href='checkout.php'">Complete Order</button>
+
         </div>
 
     </div>

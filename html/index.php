@@ -6,21 +6,54 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: ../html/login.html');
     exit;
 }
+
 require_once "../includes/auth.php";
 require_once "../config/database.php";
 
 $db = (new Database())->connecte();
 
-$query = "SELECT * FROM products ORDER BY id DESC";
-$stmt = $db->prepare($query);
-$stmt->execute();
+$catQuery = $db->prepare("SELECT * FROM categories ORDER BY name ASC");
+$catQuery->execute();
+$categories = $catQuery->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($_GET['category_id']) && !empty($_GET['category_id'])) {
+    $category_id = intval($_GET['category_id']);
+    $query = "SELECT * FROM products WHERE category_id = ? ORDER BY id DESC";
+    $stmt = $db->prepare($query);
+    $stmt->execute([$category_id]);
+} else {
+    $query = "SELECT * FROM products ORDER BY id DESC";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+}
+
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 function filterProducts($products, $category_id)
 {
     return array_filter($products, fn($p) => $p['category_id'] == $category_id);
 }
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+if (!empty($search)) {
+    $query = "SELECT * FROM products WHERE name LIKE :search OR car_model LIKE :search ORDER BY id DESC";
+    $stmt = $db->prepare($query);
+    $stmt->execute([':search' => "%$search%"]);
+} elseif (isset($_GET['category_id']) && !empty($_GET['category_id'])) {
+    $category_id = intval($_GET['category_id']);
+    $query = "SELECT * FROM products WHERE category_id = ? ORDER BY id DESC";
+    $stmt = $db->prepare($query);
+    $stmt->execute([$category_id]);
+} else {
+    $query = "SELECT * FROM products ORDER BY id DESC";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+}
+
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -40,11 +73,25 @@ function filterProducts($products, $category_id)
     <nav class="navbar">
         <img src="../assets/logo.png" class="logo">
         <div class="search-box">
-            <input type="text" placeholder="Search for products...">
-            <button>Search</button>
+            <input type="text" id="searchInput" name="search" placeholder="Search for products...">
+            <button type="button" onclick="searchProducts()">Search</button>
         </div>
+        <script>
+            function searchProducts() {
+                const searchValue = document.getElementById('searchInput').value.trim();
+                if (searchValue) {
+                    window.location.href = `index.php?search=${encodeURIComponent(searchValue)}`;
+                } else {
+                    window.location.href = 'index.php';
+                }
+            }
+        </script>
+
         <div class="icons">
-            <a href="login.html"><i class="fa fa-user"></i></a>
+            <a href="<?php echo isset($_SESSION['user_id']) ? 'profile.php' : 'login.html'; ?>">
+                <i class="fa fa-user"></i>
+            </a>
+
             <i class="fa fa-heart"></i>
             <i class="fa fa-shopping-cart" id="cartIcon"></i>
 
@@ -54,7 +101,7 @@ function filterProducts($products, $category_id)
 
     <ul class="menu">
         <li class="active"><a href="index.html">Home</a></li>
-        <li><a href="internal.html">Internal</a></li>
+        <li><a href="internal.php">Internal</a></li>
         <li><a href="external.html">External</a></li>
         <li><a href="Variousproducts.html">Various products</a></li>
     </ul>
@@ -64,16 +111,23 @@ function filterProducts($products, $category_id)
         <div class="overlay"></div>
         <div class="hero-content">
             <h1>The Largest Car Accessories Store</h1>
-
             <div class="filters">
-                <select>
+                <select name="manufacturer">
                     <option>Car Manufacturer</option>
                 </select>
-                <select>
-                    <option>Product Category</option>
+
+                <select name="category_id" id="categoryFilter">
+                    <option value="">Product Category</option>
+                    <?php foreach ($categories as $cat): ?>
+                        <option value="<?= $cat['id'] ?>" <?= (isset($category_id) && $category_id == $cat['id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($cat['name']) ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
-                <button class="btn-red">Search</button>
+
+                <button class="btn-red" onclick="filterProducts()">Search</button>
             </div>
+
 
             <p class="shipping">Free Shipping for Orders Over 20 Dinar</p>
         </div>
@@ -151,6 +205,7 @@ function filterProducts($products, $category_id)
             </a>
 
             <div class="brand">
+                <a href="../Car page/porsche.php" class="brand"></a>
                 <img src="../assets/mmarcedes.png">
                 <p>Mercedes<br>Accessories</p>
             </div>
@@ -231,10 +286,11 @@ function filterProducts($products, $category_id)
         <h2>Distinctive LEDs and Lighting</h2>
         <div class="products">
             <?php
+
             $ledProducts = filterProducts($products, 1); // category_id=1 for LEDs
             foreach ($ledProducts as $product): ?>
                 <div class="product-card">
-                    <img src="<?= htmlspecialchars($product['image_url']) ?>"
+                    <img src="../<?= htmlspecialchars($product['image_url']) ?>"
                         alt="<?= htmlspecialchars($product['name']) ?>">
                     <h4><?= htmlspecialchars($product['name']) ?></h4>
                     <p><?= htmlspecialchars($product['car_brand'] . ' ' . $product['car_model']) ?></p>
@@ -254,12 +310,13 @@ function filterProducts($products, $category_id)
         <h2>Rear diffusers</h2>
         <div class="diffusers-container">
             <?php
+
             $diffusers = filterProducts($products, 2); // category_id=2 for diffusers
             foreach ($diffusers as $diff): ?>
                 <div class="diffuser-card">
                     <div class="diffuser-image">
-                        <img src="<?= htmlspecialchars($diff['car_year_image_url']) ?>"
-                            alt="<?= htmlspecialchars($diff['name']) ?>">
+                        <img src="../<?= htmlspecialchars($product['image_url']) ?>"
+                            alt="<?= htmlspecialchars($product['name']) ?>">
                     </div>
                     <div class="diffuser-info">
                         <div class="diffuser-model"><?= htmlspecialchars($diff['car_model']) ?></div>
@@ -286,12 +343,13 @@ function filterProducts($products, $category_id)
         <h2>Best-selling Car Accessories</h2>
         <div class="best-selling-container">
             <?php
+
             $bestSelling = filterProducts($products, 3); // category_id=3 for best-selling
             foreach ($bestSelling as $item): ?>
                 <div class="best-selling-card">
                     <div class="best-selling-image">
-                        <img src="<?= htmlspecialchars($item['car_year_image_url']) ?>"
-                            alt="<?= htmlspecialchars($item['name']) ?>">
+                        <img src="../<?= htmlspecialchars($product['image_url']) ?>"
+                            alt="<?= htmlspecialchars($product['name']) ?>">
                     </div>
                     <div class="best-selling-info">
                         <h3 class="best-selling-title"><?= htmlspecialchars($item['name']) ?></h3>
@@ -328,7 +386,6 @@ function filterProducts($products, $category_id)
                             Perfect fit and excellent quality. The price was very reasonable compared to other stores.
                             Thank you!</p>
 
-                        <!-- النجوم -->
                         <div class="stars-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -344,14 +401,12 @@ function filterProducts($products, $category_id)
                     </div>
                 </div>
 
-                <!-- Slide 2 -->
                 <div class="slide">
                     <div class="review-content">
                         <p class="review-text">Excellent service and very fast delivery, especially considering I
                             ordered on the weekend. The product quality exceeded my expectations and the customer
                             support was very helpful.</p>
 
-                        <!-- النجوم -->
                         <div class="stars-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -359,7 +414,6 @@ function filterProducts($products, $category_id)
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
                         </div>
-
                         <div class="customer-info">
                             <div class="customer-name">AHMED H...</div>
                             <div class="customer-location">Riyadh</div>
@@ -367,14 +421,12 @@ function filterProducts($products, $category_id)
                     </div>
                 </div>
 
-                <!-- Slide 3 -->
                 <div class="slide">
                     <div class="review-content">
                         <p class="review-text">The carbon fiber parts I ordered were perfectly crafted and fit my car
                             like they were OEM. Shipping was surprisingly fast and the packaging was extremely secure.
                         </p>
 
-                        <!-- النجوم -->
                         <div class="stars-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -390,13 +442,11 @@ function filterProducts($products, $category_id)
                     </div>
                 </div>
 
-                <!-- Slide 4 -->
                 <div class="slide">
                     <div class="review-content">
                         <p class="review-text">Best online store for car accessories! Professional customer service and
                             premium quality products. The LED kit transformed my car's appearance completely.</p>
 
-                        <!-- النجوم -->
                         <div class="stars-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -610,10 +660,8 @@ function filterProducts($products, $category_id)
     </div>
 
 
-    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script>
-        // Slider JavaScript
         document.addEventListener('DOMContentLoaded', function () {
             const slider = document.querySelector('.slider');
             const slides = document.querySelectorAll('.slide');
@@ -624,33 +672,27 @@ function filterProducts($products, $category_id)
             let currentSlide = 0;
             const totalSlides = slides.length;
 
-            // Function to update slider position
             function updateSlider() {
                 slider.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-                // Update active dot
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentSlide);
                 });
             }
 
-            // Next slide
             function nextSlide() {
                 currentSlide = (currentSlide + 1) % totalSlides;
                 updateSlider();
             }
 
-            // Previous slide
             function prevSlide() {
                 currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
                 updateSlider();
             }
 
-            // Event listeners for buttons
             nextBtn.addEventListener('click', nextSlide);
             prevBtn.addEventListener('click', prevSlide);
 
-            // Event listeners for dots
             dots.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
                     currentSlide = index;
@@ -658,10 +700,8 @@ function filterProducts($products, $category_id)
                 });
             });
 
-            // Auto slide every 7 seconds
             let slideInterval = setInterval(nextSlide, 7000);
 
-            // Pause auto slide on hover
             const sliderContainer = document.querySelector('.slider-container');
             sliderContainer.addEventListener('mouseenter', () => {
                 clearInterval(slideInterval);
@@ -671,7 +711,6 @@ function filterProducts($products, $category_id)
                 slideInterval = setInterval(nextSlide, 7000);
             });
 
-            // Keyboard navigation
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') {
                     prevSlide();
@@ -683,7 +722,6 @@ function filterProducts($products, $category_id)
 
 
 
-        // FAQ Accordion Functionality
         document.addEventListener('DOMContentLoaded', function () {
             const faqItems = document.querySelectorAll('.faq-item');
 
@@ -691,19 +729,16 @@ function filterProducts($products, $category_id)
                 const question = item.querySelector('.faq-question');
 
                 question.addEventListener('click', () => {
-                    // Close all other items
                     faqItems.forEach(otherItem => {
                         if (otherItem !== item && otherItem.classList.contains('active')) {
                             otherItem.classList.remove('active');
                         }
                     });
 
-                    // Toggle current item
                     item.classList.toggle('active');
                 });
             });
 
-            // Open first FAQ by default
             if (faqItems.length > 0) {
                 faqItems[0].classList.add('active');
             }
@@ -825,6 +860,18 @@ function filterProducts($products, $category_id)
 
     </script>
 
+    <script>
+        function filterProducts() {
+            const select = document.getElementById('categoryFilter');
+            const categoryId = select.value;
+
+            if (categoryId) {
+                window.location.href = `index.php?category_id=${categoryId}`;
+            } else {
+                window.location.href = 'index.php';
+            }
+        }
+    </script>
 </body>
 
 </html>
